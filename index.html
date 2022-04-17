@@ -2,9 +2,9 @@
 <html>
 
 <head>
-    <title>Interactive map with Leaflet</title>
+    <title>Star Trek Deep Space 9 Info</title>
     <link rel="icon" href="data:;base64,iVBORwOKGO=" />
-    <link rel="stylesheet" href="css/leaflet.css">
+    <!-- <link rel="stylesheet" href="css/leaflet.css"> -->
     <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -24,10 +24,13 @@
             <option value="kira">Kira Nerys</option>
             <option value="worf">Worf</option>
             <option value="ezri">Ezri Dax</option>
-            
         </select>
     </div>
+    <svg id="wordCloud"></svg>
+
+    <script src="js/d3.layout.cloud.js"></script>
     <script src="js/d3.v6.min.js"></script>
     <script src="js/main.js"></script>
+    <script src="js/wordCloud.js"></script>
 
 </body>
