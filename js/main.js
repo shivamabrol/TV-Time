@@ -203,3 +203,178 @@ d3.json("data/all_series_lines.json")
 d3.select('#chars').on('change', function () {
 
 });
+// d3.csv("/data/all_scripts.csv", function(data) {
+
+//     // // console.log((data['Episode']))
+//     data.forEach(d => {
+//         // console.log(d)
+//     })
+
+// });
+
+
+//Goal C: 3rd part - Shivam
+
+
+
+
+d3.csv('data/all_scripts.csv')
+    .then(data => {
+        let episode = (data[0].DS9)
+        // // console.log(episode)
+
+        let scenes = (episode.split(/\n\[.*\]\n\n/))
+        // // console.log(episode.split('\n\[.*\]\n\n'))
+        let scene = scenes[23]
+        // console.log(scene)
+        let dialogue = scene.split(/[A-Z]+:/)
+        dialogue.shift()
+        // console.log(dialogue)
+
+        //Regular expression with the /g flag
+        const regex = /[A-Z]+:/g;
+        //Reference string
+        //Using matchAll() method
+        const array = [...scene.matchAll(regex)];
+
+        // console.log(array.length);
+        // console.log(array[1][0]);
+        // console.log(array[2][0]);
+
+    })
+
+
+function getSceneInfo(season, episode) {
+    d3.json("data/all_scripts_raw.json").then(data => {
+        for (let i = 0; i < 170; i++) {
+            let episode = data['DS9']['episode ' + String(i)];
+            let scenes = (episode.split(/\n\[.*\]\n\n/));
+            for (let j = 0; j < scenes.length; j++) {
+                let scene = scenes[j];
+                let dialogue = scene.split(/[A-Z]+:/)
+                dialogue.shift()
+                const regex = /[A-Z]+:/g;
+                //Reference string
+                //Using matchAll() method
+                let chars = [...scene.matchAll(regex)];
+            }
+
+            break;
+        }
+    })
+}
+
+
+function changeSeason(value) {
+    if (value.length == 0) {
+        document.getElementById("episode_id").innerHTML = "<option></option>";
+    }
+
+    // 1	20	
+    // 2	26	
+    // 3	26	
+    // 4	26	
+    // 5	26
+    // 6	26	
+    // 7	26 
+    else {
+        document.getElementById("episode_id").innerHTML = "";
+
+        var episode = ""
+        var episode_count = 0
+        if (value == 1) {
+            episode_count = 20
+        } else {
+            episode_count = 26
+        }
+        for (let a = 1; a <= episode_count; a++) {
+            episode += "<option>" + a + "</option>";
+        }
+
+        document.getElementById("episode_id").innerHTML = episode;
+
+
+    }
+}
+
+
+
+function changeEpisode(value) {
+
+
+    d3.json("data/all_series_lines.json").then(data => {
+        let episode_no = 0,
+            season = document.getElementById("season_id").value;
+        episode_no = parseInt(season - 1) * 26 + parseInt(value);
+        // console.log(episode_no - 1)
+        let episode_data = ((data['DS9']['episode ' + String(episode_no)]))
+        let speakers = Object.keys(episode_data)
+        let max = -1;
+        let index = "";
+        let characters_who_spoke = []
+
+        let chartData = []
+
+        for (let a = 0; a < speakers.length; a++) {
+
+            if (episode_data[speakers[a]].length > 0) {
+                // console.log(speakers[a]) // speakers 
+                characters_who_spoke.push(speakers[a]);
+                if (episode_data[speakers[a]].length > max) {
+                    max = episode_data[speakers[a]].length
+                    index = speakers[a]
+                }
+            }
+        }
+
+        for (let a = 0; a < speakers.length; a++) {
+            if (episode_data[speakers[a]].length > 0) {
+                chartData.push({
+                    key: speakers[a],
+                    value: episode_data[speakers[a]].length
+                });
+            }
+        }
+
+        console.log(chartData)
+
+
+
+
+        var node = document.getElementById('characters_and_dialogue');
+        var newNode = document.createElement('p');
+
+        newNode.setAttribute("id", "box_vals");
+
+        node.innerHTML = ""
+        // newNode.appendChild(document.createTextNode('Characters who spoke in this episdoe are ' + characters_who_spoke));
+        // document.write("<br>");
+        newNode.appendChild(document.createTextNode(' Character who spoke the most is ' + index));
+
+
+        node.appendChild(newNode);
+
+        var img = document.createElement('img');
+        img.src = 'images/' + index.toLowerCase() + '.jpeg';
+        document.getElementById('characters_and_dialogue').appendChild(img)
+
+        // console.log(characters_who_spoke)
+        // console.log(index.toLowerCase())
+
+        // console.log(index);
+        var svg = d3.select("svg#barChart1");
+        svg.selectAll("*").remove();
+
+
+        //-----------Bar Chart-------------------
+        let barTimeYear = new BarChart({
+            'parentElement': '#barChart1',
+            'containerHeight': 350,
+            'containerWidth': 600
+        }, chartData);
+
+    })
+
+
+
+}
