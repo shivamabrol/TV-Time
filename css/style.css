@@ -13,3 +13,9 @@
     font-size: 10px;
     color: #888;
   }
+
+  .body {
+    background-image: url('images/bg.jpeg');
+    /* background-repeat: no-repeat; */
+    /* opacity: 0.4; */
+}
