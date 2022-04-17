@@ -182,7 +182,7 @@ d3.json("data/all_series_lines.json")
             }
         });
         var allWords = [];
-        linesData.filter(d=> d.char =="kira").forEach(d => {
+        linesData.filter(d=> d.char =="kira").filter(d=>d.episode==0).forEach(d => {
             //allWords = allWords.concat(d.lines);
            //allWords.push(d.lines.forEach(w=>w));
             d.lines.forEach(w=>{
