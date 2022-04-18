@@ -46,6 +46,9 @@ class BarChart {
         //     .attr('transform', `translate(0,${vis.height})`)
         //     //.attr("transform", "rotate(-90)")
         //     .call(vis.xAxis);
+
+
+
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
             .attr('height', vis.config.containerHeight);
@@ -78,8 +81,11 @@ class BarChart {
             .paddingInner(0.2)
             .paddingOuter(0.2);
         vis.yScale = d3.scaleLinear().range([vis.height, 0])
+            .domain([0, d3.max(vis.data, function (d) { 
+                return d.value; 
+            })]);
 
-            .domain([0, d3.max(vis.data, function (d) { return d.value; })]);
+            // .domain([0, d3.max(vis.data, function (d) { return d.value; })]);
 
 
         vis.xAxis = d3.axisTop(vis.xScale);
@@ -115,7 +121,10 @@ class BarChart {
             })
             .attr('x', (s) => vis.xScale(s.key))
             // .attr('y', (s) => s.value)
-            .attr('height', (s) => (s.value))
+            .attr('y', (s) => vis.yScale(s.value))
+            // .attr('height', (s) => vis.yScale(s.value))
+            .attr('height', (s) => vis.height - vis.yScale(s.value))
+
             .attr('width', vis.xScale.bandwidth())
 
 
