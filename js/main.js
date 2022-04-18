@@ -190,12 +190,15 @@ d3.json("data/all_series_lines.json")
                allWords = allWords.concat(w);
             });
         });
-        console.log(allWords+ 'h');
+        word =["Hello", "world", "normally", "you", "want", "more", "words",
+        "than", "this"];
+        //console.log(allWords+ 'h');
         wordCloud = new WordCloud({
             'parentElement': '#wordCloud',
             'containerHeight': 350,
-            'containerWidth': 600
-          }, allWords);
+            'containerWidth': 600,
+            //invalidation
+          }, word);
     });
 
 
@@ -218,30 +221,30 @@ d3.select('#chars').on('change', function () {
 
 
 
-d3.csv('data/all_scripts.csv')
-    .then(data => {
-        let episode = (data[0].DS9)
-        // // console.log(episode)
+// d3.csv('data/all_scripts.csv')
+//     .then(data => {
+//         let episode = (data[0].DS9)
+//         // // console.log(episode)
 
-        let scenes = (episode.split(/\n\[.*\]\n\n/))
-        // // console.log(episode.split('\n\[.*\]\n\n'))
-        let scene = scenes[23]
-        // console.log(scene)
-        let dialogue = scene.split(/[A-Z]+:/)
-        dialogue.shift()
-        // console.log(dialogue)
+//         let scenes = (episode.split(/\n\[.*\]\n\n/))
+//         // // console.log(episode.split('\n\[.*\]\n\n'))
+//         let scene = scenes[23]
+//         // console.log(scene)
+//         let dialogue = scene.split(/[A-Z]+:/)
+//         dialogue.shift()
+//         // console.log(dialogue)
 
-        //Regular expression with the /g flag
-        const regex = /[A-Z]+:/g;
-        //Reference string
-        //Using matchAll() method
-        const array = [...scene.matchAll(regex)];
+//         //Regular expression with the /g flag
+//         const regex = /[A-Z]+:/g;
+//         //Reference string
+//         //Using matchAll() method
+//         const array = [...scene.matchAll(regex)];
 
-        // console.log(array.length);
-        // console.log(array[1][0]);
-        // console.log(array[2][0]);
+//         // console.log(array.length);
+//         // console.log(array[1][0]);
+//         // console.log(array[2][0]);
 
-    })
+//     })
 
 
 function getSceneInfo(season, episode) {
