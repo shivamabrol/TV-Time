@@ -24,7 +24,15 @@ class BarChart {
         vis.yValue = d => d.y;
         vis.tp = '#tooltipBarChart1';
 
-        
+
+        vis.colorPalette = d3.scaleOrdinal(d3.schemeTableau10);
+        let keys = []
+        for(let a = 0; a < vis.data.length; a++) {
+            keys.push(vis.data[a].key)
+        }
+        vis.colorPalette.domain(Object.keys(keys));
+
+
         // vis.yScale = d3.scaleLinear()
         //     .domain([0, d3.max(vis.data, vis.yValue)])
         //     .range([vis.height, 0])
@@ -38,6 +46,9 @@ class BarChart {
         //     .attr('transform', `translate(0,${vis.height})`)
         //     //.attr("transform", "rotate(-90)")
         //     .call(vis.xAxis);
+
+
+
         vis.svg = d3.select(vis.config.parentElement)
             .attr('width', vis.config.containerWidth)
             .attr('height', vis.config.containerHeight);
@@ -53,19 +64,28 @@ class BarChart {
 
 
         let vis = this
-        vis.chart.selectAll('*')
-            .data([])
-            .exit().remove();
+        // vis.svg.selectAll('*')
+        //     .data([])
+        //     .exit().remove();
+
+        // vis.svg.selectAll("*").remove();
+
+
+
         vis.xScale = d3
             .scaleBand()
             .range([0, vis.width])
-            .domain(vis.data.map(function (d) { return d.x; }))
+            .domain(vis.data.map(function (d) {
+                return d.key;
+            }))
             .paddingInner(0.2)
             .paddingOuter(0.2);
-            
         vis.yScale = d3.scaleLinear().range([vis.height, 0])
+            .domain([0, d3.max(vis.data, function (d) { 
+                return d.value; 
+            })]);
 
-            .domain([0, d3.max(vis.data, function (d) { return d.y; })]);
+            // .domain([0, d3.max(vis.data, function (d) { return d.value; })]);
 
 
         vis.xAxis = d3.axisTop(vis.xScale);
@@ -90,36 +110,23 @@ class BarChart {
         vis.chart.selectAll('.bar')
             .data(vis.data)
             .enter()
+
             .append('rect')
             //.attr('fill', d3.color('blue'))
             .attr("class", "bar")
-            .attr('fill', d3.color('blue'))
-            .attr('x', (s) => vis.xScale(s.x))
-            .attr('y', (s) => vis.yScale(s.y))
-            //.attr('height', 200)
-            .attr('height', (s) => vis.height - vis.yScale(s.y))
-            .attr('width', vis.xScale.bandwidth())
-            .on('mouseover', function (event, d) { 
-        
-                //create a tool tip
-                d3.select('#tooltip')
-                  .style('opacity', 1)
-                  .style('z-index', 1000000)
-                  .html(`
-                  <div class="tooltip-title">Key: ${d.x}</div>
-                  <ul>
-                    <li> Value: ${d.y}</li>
+            // .attr('fill', vis.colorPalette(d.key))
+            .attr('fill', function(d) {
+                let a = d.key;
+                return vis.colorPalette(d.key);
+            })
+            .attr('x', (s) => vis.xScale(s.key))
+            // .attr('y', (s) => s.value)
+            .attr('y', (s) => vis.yScale(s.value))
+            // .attr('height', (s) => vis.yScale(s.value))
+            .attr('height', (s) => vis.height - vis.yScale(s.value))
 
-                  </ul>
-                `);
-       
-              })
-              .on('mousemove', (event) => {
-                //position the tooltip
-                d3.select('#tooltip')
-                  .style('left', (event.pageX + 10) + 'px')
-                  .style('top', (event.pageY + 10) + 'px');
-              })
+            .attr('width', vis.xScale.bandwidth())
+
 
         vis.chart.append("g")
             .attr("class", "axis")
