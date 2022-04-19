@@ -52,6 +52,7 @@ class WordCloud {
             .attr("width", vis.width)
             .attr("font-family", vis.fontFamily)
             .attr("text-anchor", "middle");
+        //works fine--------------------
 
         vis.g = vis.svg.append("g").attr("transform", `translate(${vis.config.margin.left},${vis.config.margin.top})`);
 

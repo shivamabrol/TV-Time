@@ -1,12 +1,15 @@
-var linesData = [];
-var stopwords = new Set("i,me,my,myself,we,us,our,ours,ourselves,you,your,yours,yourself,yourselves,he,him,his,himself,she,her,hers,herself,it,its,itself,they,them,their,theirs,themselves,what,which,who,whom,whose,this,that,these,those,am,is,are,was,were,be,been,being,have,has,had,having,do,does,did,doing,will,would,should,can,could,ought,im,youre,hes,shes,its,were,theyre,ive,youve,weve,theyve,id,youd,hed,shed,wed,theyd,ill,youll,hell,shell,well,theyll,isnt,arent,wasnt,werent,hasnt,havent,hadnt,doesnt,dont,didnt,wont,wouldnt,shant,shouldnt,cant,cannot,couldnt,mustnt,lets,thats,whos,whats,heres,theres,whens,wheres,whys,hows,a,an,the,and,but,if,or,because,as,until,while,of,at,by,for,with,about,against,between,into,through,during,before,after,above,below,to,from,up,upon,down,in,out,on,off,over,under,again,further,then,once,here,there,when,where,why,how,all,any,both,each,few,more,most,other,some,such,no,nor,not,only,own,same,so,than,too,very,say,says,said,shall".split(","));
+function wordC() {
 
-d3.json("data/all_series_lines.json")
+    var svg = d3.select("svg#wordCloud");
+    svg.selectAll("*").remove();
+
+
+    d3.json("data/all_series_lines.json")
     .then(function (da) {
         let ds9 = da.DS9;
-        //console.log(da.DS9);
+        //// console.log(da.DS9);
         Object.keys(ds9).forEach(ep => {
-            //console.log(ds9[ep]);
+            //// console.log(ds9[ep]);
             var episode = ds9[ep];
 
             var number = +ep.substring(
@@ -182,207 +185,141 @@ d3.json("data/all_series_lines.json")
             }
         });
         var allWords = [];
-        linesData.filter(d=> d.char =="kira").filter(d=>d.episode==0).forEach(d => {
-            //allWords = allWords.concat(d.lines);
-           //allWords.push(d.lines.forEach(w=>w));
+        let charName = document.getElementById('chars').value
+        linesData.filter(d=> d.char == charName).forEach(d => {
+        //     allWords = allWords.concat(d.lines);
+        //    allWords.push(d.lines.forEach(w=>w));
             d.lines.forEach(w=>{
                // allWords.push(w);
                allWords = allWords.concat(w);
             });
         });
-        word =["Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this"];
-        //console.log(allWords+ 'h');
+        // console.log(allWords+ 'h');
         // wordCloud = new WordCloud({
         //     'parentElement': '#wordCloud',
         //     'containerHeight': 350,
-        //     'containerWidth': 600,
-        //     //invalidation
-        //   }, word);
+        //     'containerWidth': 600
+        //   }, allWords);
+
+
+        var fontFamily = "sans-serif";
+        var fontScale = 15;
+        var padding = 0;
+        var height = 800;
+        var width = 500;
+        const rotate = () => (~~(Math.random() * 6) - 3) * 15
+      
+        var data = d3
+          .rollups(
+            allWords,
+            (group) => group.length,
+            (w) => w
+          )
+          .sort(([, a], [, b]) => d3.descending(a, b))
+          .slice(0, 250)
+          .map(([text, value]) => ({ text, value }));
+        console.log(data);
+      
+        const svg = d3
+          .select("#wordCloud")
+          .append("svg")
+          .attr("height", height)
+          .attr("width", width)
+          .attr("font-family", fontFamily)
+          .attr("text-anchor", "middle");
+      
+        const w_cloud = d3.layout.cloud()
+          .size([height, width])
+        //   .words(data.map((d) => Object.create(d)))
+          .words(data)
+          .padding(padding)
+          .rotate(rotate)
+          .font(fontFamily)
+          .fontSize((d) => Math.sqrt(d.value) * fontScale)
+          .on("word", (d) => {
+                svg
+              .append("text")
+              .attr("font-size", d.size/5)
+            .attr("transform", `translate(${d.x/5},${d.y/5}) rotate(${d.rotate})`)
+            .text(d.text);
+
+            // svg
+            //   .append("text")
+            //   .attr("font-size", e.size)
+            // .attr("transform", `translate(${e.x},${e.y}) rotate(${e.rotate})`)
+            // .text(e.text);
+          });
+      
+        w_cloud.start();
     });
-//console.log(linesData);
-d3.select('#chars').on('change', function () {
 
-});
-// d3.csv("/data/all_scripts.csv", function(data) {
+// d3.json("data/all_series_lines.json").then((words) => {
+//   var stopwords = new Set(
+//     "i,me,my,myself,we,us,our,ours,ourselves,you,your,yours,yourself,yourselves,he,him,his,himself,she,her,hers,herself,it,its,itself,they,them,their,theirs,themselves,what,which,who,whom,whose,this,that,these,those,am,is,are,was,were,be,been,being,have,has,had,having,do,does,did,doing,will,would,should,can,could,ought,i'm,you're,he's,she's,it's,we're,they're,i've,you've,we've,they've,i'd,you'd,he'd,she'd,we'd,they'd,i'll,you'll,he'll,she'll,we'll,they'll,isn't,aren't,wasn't,weren't,hasn't,haven't,hadn't,doesn't,don't,didn't,won't,wouldn't,shan't,shouldn't,can't,cannot,couldn't,mustn't,let's,that's,who's,what's,here's,there's,when's,where's,why's,how's,a,an,the,and,but,if,or,because,as,until,while,of,at,by,for,with,about,against,between,into,through,during,before,after,above,below,to,from,up,upon,down,in,out,on,off,over,under,again,further,then,once,here,there,when,where,why,how,all,any,both,each,few,more,most,other,some,such,no,nor,not,only,own,same,so,than,too,very,say,says,said,shall".split(
+//       ","
+//     )
+//   );
+//   // console.log(words)
+//   words = words
+//     // .trim()
+//     .split(/[\s.]+/g)
+//     .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
+//     .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
+//     .map((w) => w.replace(/['’]s$/g, ""))
+//     .map((w) => w.substring(0, 30))
+//     .map((w) => w.toLowerCase())
+//     .filter((w) => w && !stopwords.has(w));
 
-//     // // console.log((data['Episode']))
-//     data.forEach(d => {
-//         // console.log(d)
-//     })
+//   // // console.log(d3.rollups(words,
+//   //   (group) => group.length,
+//   //   (w) => w
+//   // ).sort(([, a], [, b]) => d3.descending(a, b))
+//   // .slice(0, 250)
+//   // .map(([text, value]) => ({ text, value })));
+//   var fontFamily = "sans-serif";
+//   var fontScale = 15;
+//   var padding = 0;
+//   var height = 800;
+//   var width = 500;
+//   const rotate = () => 0; // () => (~~(Math.random() * 6) - 3) * 30
 
+//   var data = d3
+//     .rollups(
+//       words,
+//       (group) => group.length,
+//       (w) => w
+//     )
+//     .sort(([, a], [, b]) => d3.descending(a, b))
+//     .slice(0, 250)
+//     .map(([text, value]) => ({ text, value }));
+//   // console.log(data);
+
+//   const svg = d3
+//     .select("#wordCloud")
+//     .append("svg")
+//     .attr("height", 200)
+//     .attr("width", 200)
+//     .attr("font-family", fontFamily)
+//     .attr("text-anchor", "middle");
+
+//   const w_cloud = d3.layout.cloud()
+//     .size([200, 200])
+//     .words(data.map((d) => Object.create(d)))
+//     .padding(padding)
+//     .rotate(rotate)
+//     .font(fontFamily)
+//     .fontSize((d) => Math.sqrt(d.value) * fontScale)
+//     .on("word", ({ size, x, y, rotate, text }) => {
+//       svg
+//         .append("text")
+//         .attr("font-size", size)
+//         .attr("transform", `translate(${x},${y}) rotate(${rotate})`)
+//         .text(text);
+//     });
+
+//   w_cloud.start();
+// //   const inval = invalidation.then(() => w_cloud.stop());
+// //   inval__
 // });
-
-
-//Goal C: 3rd part - Shivam
-
-
-
-
-// d3.csv('data/all_scripts.csv')
-//     .then(data => {
-//         let episode = (data[0].DS9)
-//         // // console.log(episode)
-
-//         let scenes = (episode.split(/\n\[.*\]\n\n/))
-//         // // console.log(episode.split('\n\[.*\]\n\n'))
-//         let scene = scenes[23]
-//         // console.log(scene)
-//         let dialogue = scene.split(/[A-Z]+:/)
-//         dialogue.shift()
-//         // console.log(dialogue)
-
-//         //Regular expression with the /g flag
-//         const regex = /[A-Z]+:/g;
-//         //Reference string
-//         //Using matchAll() method
-//         const array = [...scene.matchAll(regex)];
-
-//         // console.log(array.length);
-//         // console.log(array[1][0]);
-//         // console.log(array[2][0]);
-
-//     })
-
-
-function getSceneInfo(season, episode) {
-    d3.json("data/all_scripts_raw.json").then(data => {
-        for (let i = 0; i < 170; i++) {
-            let episode = data['DS9']['episode ' + String(i)];
-            let scenes = (episode.split(/\n\[.*\]\n\n/));
-            for (let j = 0; j < scenes.length; j++) {
-                let scene = scenes[j];
-                let dialogue = scene.split(/[A-Z]+:/)
-                dialogue.shift()
-                const regex = /[A-Z]+:/g;
-                //Reference string
-                //Using matchAll() method
-                let chars = [...scene.matchAll(regex)];
-            }
-
-            break;
-        }
-    })
-    
-}
-
-
-function changeSeason(id, value) {
-    console.log(id)
-    if (value.length == 0) {
-        document.getElementById("episode_" + id + "_id").innerHTML = "<option></option>";
-    }
-
-    // 1	20	
-    // 2	26	
-    // 3	26	
-    // 4	26	
-    // 5	26
-    // 6	26	
-    // 7	26 
-    else {
-        document.getElementById("episode_" + id + "_id").innerHTML = "";
-
-        var episode = ""
-        var episode_count = 0
-        if (value == 1) {
-            episode_count = 20
-        } else {
-            episode_count = 26
-        }
-        for (let a = 1; a <= episode_count; a++) {
-            episode += "<option>" + a + "</option>";
-        }
-
-        document.getElementById("episode_" + id + "_id").innerHTML = episode;
-
-
-    }
-}
-
-
-
-function changeEpisode(id, value) {
-
-
-    d3.json("data/all_series_lines.json").then(data => {
-        let episode_no = 0,
-            season = document.getElementById("season_" + id + "_id").value;
-        episode_no = parseInt(season - 1) * 26 + parseInt(value);
-
-        console.log(episode_no)
-        // console.log(episode_no - 1)
-        let episode_data = ((data['DS9']['episode ' + String(episode_no)]))
-        let speakers = Object.keys(episode_data)
-        let max = -1;
-        let index = "";
-        let characters_who_spoke = []
-
-        let chartData = []
-
-        for (let a = 0; a < speakers.length; a++) {
-
-            if (episode_data[speakers[a]].length > 0) {
-                // console.log(speakers[a]) // speakers 
-                characters_who_spoke.push(speakers[a]);
-                if (episode_data[speakers[a]].length > max) {
-                    max = episode_data[speakers[a]].length
-                    index = speakers[a]
-                }
-            }
-        }
-
-        for (let a = 0; a < speakers.length; a++) {
-            if (episode_data[speakers[a]].length > 0) {
-                chartData.push({
-                    key: speakers[a],
-                    value: episode_data[speakers[a]].length
-                });
-            }
-        }
-
-        // console.log(chartData)
-
-
-        var node = document.getElementById('characters_and_dialogue_' + id);
-        var newNode = document.createElement('p');
-
-        newNode.setAttribute("id", "box_vals");
-
-        node.innerHTML = ""
-        // newNode.appendChild(document.createTextNode('Characters who spoke in this episdoe are ' + characters_who_spoke));
-        // document.write("<br>");
-        newNode.appendChild(document.createTextNode(' Character who spoke the most is ' + index));
-
-
-        node.appendChild(newNode);
-
-        var img = document.createElement('img');
-        img.src = 'images/' + index.toLowerCase() + '.jpeg';
-        // document.getElementById('characters_and_dialogue_' + id).appendChild(img)
-        document.getElementById('characters_and_dialogue_' + id).appendChild(img)
-
-        // console.log(characters_who_spoke)
-        // console.log(index.toLowerCase())
-
-        // console.log(index);
-        var svg = d3.select("svg#barChart" + id);
-        svg.selectAll("*").remove();
-
-
-        //-----------Bar Chart-------------------
-
-        let barTimeYear = new BarChart({
-                'parentElement': '#barChart' + id,
-                'containerHeight': 350,
-                'containerWidth': 600
-            }, chartData);
-
-
-
-
-    })
-
-
 
 }

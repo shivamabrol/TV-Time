@@ -13,7 +13,9 @@
 
     <div class="chars">
         <label for="chars">Choose a Chareter:</label>
-        <select name="chars" id="chars">
+        <select name="chars" id="chars" onchange="charSelectWC()">
+        <!-- <select name="chars" id="chars"> -->
+
             <option value="sisko">Benjamin Sisko</option>
             <option value="odo">Odo</option>
             <option value="bashir">Julian Bashir</option>
@@ -26,40 +28,31 @@
             <option value="ezri">Ezri Dax</option>
         </select>
     </div>
-    <svg id="wordCloud"></svg>
 
-    <script src="js/d3.layout.cloud.js"></script>
+
+    <div id="wc">
+        <svg id="wordCloud" width=800 height=800 style="border:1px solid black"></svg>
+    </div>
+
+
+    <!-- <script src="node_modules/d3-cloud/build/d3.layout.cloud.js"></script>
+    <script src="node_modules/d3-dispatch/dist/d3-dispatch.js"></script> -->
+    <script src="js/d3-cloud-master/build/d3.layout.cloud.js"></script>
+
     <script src="js/d3.v6.min.js"></script>
     <script src="js/main.js"></script>
-    <script src="js/wordCloud.js"></script>
+    <script src="js/wordc.js"></script>
+    <!-- <script src="js/wordCloud.js"></script> -->
+    <script src="js/word-cloud.js"></script>
     <script src="js/barchart.js"></script>
 
-    <div class="seasons">
+
+    <a href="index2.html">See character wise interaction in an episode</a>
+
+    <div class="first_vis">
         <label for="season">Select a season:</label>
 
-        <select name="season" id="season_id" onchange="changeSeason(this.value)">
-            <option value="1">Season 1</option>
-            <option value="2">Season 2</option>
-            <option value="3">Season 3</option>
-            <option value="4">Season 4</option>
-            <option value="5">Season 5</option>
-            <option value="6">Season 6</option>
-            <option value="7">Season 7</option>
-        </select>
-    
-    
-        <label for="episode">Select the episode no. :</label>
-    
-        <select name="episode" id="episode_id" onchange="changeEpisode(this.value)">
-    
-        </select>
-    </div>
-
-
-    <div class="scenes">
-        <label for="season_scene">Select a season:</label>
-
-        <select name="season_scene" id="season_scene_id" onchange="changeSeason(this.value)">
+        <select name="season_1" id="season_1_id" onchange="changeSeason(1, this.value)">
             <option value="1">Season 1</option>
             <option value="2">Season 2</option>
             <option value="3">Season 3</option>
@@ -69,23 +62,25 @@
             <option value="7">Season 7</option>
         </select>
 
-    
-    
-        <label for="episode_scene">Select the episode no. :</label>
-    
-        <select name="episode_scene" id="episode_scene_id" onchange="getSceneInfo(this.value)">
-    
+
+        <label for="episode_1">Select the episode no. :</label>
+
+        <select name="episode_1" id="episode_1_id" onchange="changeEpisode(1, this.value)">
+
         </select>
     </div>
+
+
 
     <div class="charDiv">
-        <p id= "characters_and_dialogue"></p>
+        <p id="characters_and_dialogue_1"></p>
 
         <svg id="barChart1"></svg>
 
 
-
     </div>
+
+
 
 
 </html>
