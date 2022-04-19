@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+    <div id="new">
+        <svg id="my_dataviz" width=700 height=700 style="border:1px solid black"></svg>
+
+    </div>
+    <script src="js/d3.v6.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+
+
+        function getSceneInfo(season, episode) {
+
+            d3.json("data/all_scripts_raw.json").then(data => {
+                for (let i = 0; i < 170; i++) {
+                    let episode = data['DS9']['episode ' + String(i)];
+                    let scenes = (episode.split(/\n\[.*\]\n\n/));
+                    for (let j = 1; j < scenes.length; j++) {
+                        let scene = scenes[j];
+                        let dialogue = scene.split(/[A-Z]+:/)
+                        dialogue.shift()
+                        const regex = /[A-Z]+:/g;
+                        //Reference string
+                        //Using matchAll() method
+                        let chars = [...scene.matchAll(regex)];
+                        for (let char = 0; char < chars.length; char++) {
+                            console.log(chars[char][0]);
+                        }
+                        break;
+
+                    }
+
+                    break;
+                }
+            })
+
+        }
+
+        // create the svg area
+        const svg = d3.select("#my_dataviz")
+            .append("svg")
+            // .attr("width", 5000)
+            // .attr("height", 5000)
+            .append("g")
+            .attr("transform", "translate(250,250)")
+
+        // create a matrix
+        const matrix = [[0, 0, 769, 3, 0, 0, 0, 0, 30, 0],
+        [972, 0, 785, 0, 250, 0, 532, 704, 375, 93],
+        [211, 0, 0, 3, 0, 0, 0, 3, 24, 0],
+        [962, 683, 724, 0, 232, 0, 454, 765, 351, 0],
+        [447, 42, 295, 15, 0, 0, 3, 192, 3, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [673, 113, 607, 48, 250, 0, 0, 612, 21, 93],
+        [1080, 149, 860, 29, 106, 0, 0, 0, 33, 0],
+        [471, 15, 402, 33, 126, 0, 282, 399, 0, 99],
+        [147, 21, 150, 0, 42, 0, 0, 108, 9, 0]];
+
+
+        var names = ['SISKO', 'ODO', 'BASHIR', 'DAX', 'JAKE', 'OBRIEN', 'QUARK', 'KIRA', 'WORF', 'EZRI']
+//         const colors = ['#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
+// '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC']
+
+var colors = d3.scaleOrdinal()
+  .domain(names)
+  .range(d3.schemeSet2);
+ 
+//   console.log(colors[0])
+
+        // 4 groups, so create a vector of 4 colors
+//         const colors = d3.scaleOrdinal()
+//   .domain(keys)
+//   .range(d3.schemeSet2);
+
+
+        // give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon
+        const res = d3.chord()
+            .padAngle(0.05)
+            .sortSubgroups(d3.descending)
+            (matrix)
+
+        // add the groups on the outer part of the circle
+        svg
+            .datum(res)
+            .append("g")
+            .selectAll("g")
+            .data(function (d) { return d.groups; })
+            .join("g")
+            .append("path")
+            .style("fill", (d, i) => colors(i))
+            .style("stroke", "black")
+            .attr("d", d3.arc()
+                .innerRadius(200)
+                .outerRadius(210) //just try this - may need to shift a little but should be close
+            )
+
+
+        var tooltip = d3.select("#my_dataviz")
+            .append("div")
+            .style("opacity", 0)
+            .attr("class", "tooltip")
+            .style("background-color", "white")
+            .style("border", "solid")
+            .style("border-width", "1px")
+            .style("border-radius", "5px")
+            .style("padding", "10px")
+        // Add the links between groups
+
+        //tooltip doesn't show up
+        
+        const showTooltip = function (event, d) {
+            console.log(names[d.source.index] + names[d.target.index])
+            tooltip
+                .style("opacity", 1)
+                .html("Source: " + names[d.source.index] + "<br>Target: " + names[d.target.index])
+                .style("left", event.x + "px")
+                .style("top", event.y + "px")
+        }
+
+        // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
+        var hideTooltip = function (d) {
+            tooltip
+                .transition()
+                .duration(1000)
+                .style("opacity", 0)
+        }
+
+        svg
+            .datum(res)
+            .append("g")
+            .selectAll("path")
+            .data(d => d)
+            .join("path")
+            .attr("d", d3.ribbon()
+                .radius(200) //starting point- may be off by a bit, but should fit
+            )
+            .style("fill", d => colors(d.source.index)) // colors depend on the source group. Change to target otherwise.
+            .style("stroke", "black")
+            .on("mouseover", showTooltip)
+            .on("mouseleave", hideTooltip)
+
+
+            //  svg = d3.select("#my_dataviz")
+
+// Handmade legend
+
+// create a list of keys
+
+var color = d3.scaleOrdinal()
+  .domain(names)
+  .range(d3.schemeSet2);
+  
+// console.log()
+// Usually you have a color scale in your chart already
+// var color = d3.scaleOrdinal()
+//   .domain(keys)
+//   .range(d3.schemeSet2);
+
+// Add one dot in the legend for each name.
+svg.selectAll("mydots")
+  .data(names)
+  .enter()
+  .append("circle")
+    .attr("cx", 200)
+    .attr("cy", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+    .attr("r", 7)
+    .style("fill", function(d){ return color(d)})
+
+// Add one dot in the legend for each name.
+svg.selectAll("mylabels")
+  .data(names)
+  .enter()
+  .append("text")
+    .attr("x", 230)
+    .attr("y", function(d,i){ return 100 + i*25}) // 100 is where the first dot appears. 25 is the distance between dots
+    .style("fill", function(d){ return color(d)})
+    .text(function(d){ return d})
+    .attr("text-anchor", "left")
+    .style("alignment-baseline", "middle")
+
+
+
+
+
+    </script>
+
+
+    <div class="first_vis">
+        <label for="season">Select a season:</label>
+
+        <select name="season_1" id="season_1_id" onchange="changeSeason(1, this.value)">
+            <option value="1">Season 1</option>
+            <option value="2">Season 2</option>
+            <option value="3">Season 3</option>
+            <option value="4">Season 4</option>
+            <option value="5">Season 5</option>
+            <option value="6">Season 6</option>
+            <option value="7">Season 7</option>
+        </select>
+
+
+        <label for="episode_1">Select the episode no. :</label>
+
+        <select name="episode_1" id="episode_1_id" onchange="getSceneInfo(1, this.value)">
+
+        </select>
+    </div>
+
+</body>
+
+</html>
