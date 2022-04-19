@@ -199,6 +199,13 @@ d3.json("data/all_series_lines.json")
             'containerWidth': 600,
             //invalidation
           }, word);
+
+          wordCloud = new BarChart({
+            'parentElement': '#e4fiwh',
+            'containerHeight': 350,
+            'containerWidth': 600,
+            //invalidation
+          }, word);
     });
 
 
