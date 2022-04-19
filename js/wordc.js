@@ -242,11 +242,17 @@ function charSelectWC() {
             }
         });
 
+
+        let episode_no = 0,
+        season = document.getElementById("season_1_id").value,
+        episode = document.getElementById("episode_1_id").value;
+    episode_no = parseInt(season - 1) * 26 + parseInt(episode);
+
         var allWords = [];
         let character = document.getElementById("chars")
         console.log(character.value)
         linesData.filter(d => d.char == character.value)
-            .filter(d => d.episode == 0)
+            .filter(d => d.episode == episode_no)
             .forEach(d => {
                 //allWords = allWords.concat(d.lines);
                 //allWords.push(d.lines.forEach(w=>w));
