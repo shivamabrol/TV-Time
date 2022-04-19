@@ -1,4 +1,10 @@
-d3.json("data/all_series_lines.json")
+function wordC() {
+
+    var svg = d3.select("svg#wordCloud");
+    svg.selectAll("*").remove();
+
+
+    d3.json("data/all_series_lines.json")
     .then(function (da) {
         let ds9 = da.DS9;
         //// console.log(da.DS9);
@@ -179,9 +185,10 @@ d3.json("data/all_series_lines.json")
             }
         });
         var allWords = [];
-        linesData.filter(d=> d.char =="kira").forEach(d => {
-            //allWords = allWords.concat(d.lines);
-           //allWords.push(d.lines.forEach(w=>w));
+        let charName = document.getElementById('chars').value
+        linesData.filter(d=> d.char == charName).forEach(d => {
+        //     allWords = allWords.concat(d.lines);
+        //    allWords.push(d.lines.forEach(w=>w));
             d.lines.forEach(w=>{
                // allWords.push(w);
                allWords = allWords.concat(w);
@@ -232,7 +239,7 @@ d3.json("data/all_series_lines.json")
           .on("word", (d) => {
                 svg
               .append("text")
-              .attr("font-size", d.size/10)
+              .attr("font-size", d.size/5)
             .attr("transform", `translate(${d.x/5},${d.y/5}) rotate(${d.rotate})`)
             .text(d.text);
 
@@ -314,3 +321,5 @@ d3.json("data/all_series_lines.json")
 // //   const inval = invalidation.then(() => w_cloud.stop());
 // //   inval__
 // });
+
+}
