@@ -164,7 +164,7 @@ d3.json("data/all_series_lines.json")
             } else {
                 var ezri1 = "";
                 var ezri = [];
-                episode.SISKO.forEach(d => {
+                episode.EZRI.forEach(d => {
                     ezri1 += " " + d;
                 });
                 ezri1 = ezri1
@@ -182,7 +182,7 @@ d3.json("data/all_series_lines.json")
             }
         });
         var allWords = [];
-        linesData.filter(d=> d.char =="kira").filter(d=>d.episode==0).forEach(d => {
+        linesData.filter(d=> d.char =="kira").forEach(d => {
             //allWords = allWords.concat(d.lines);
            //allWords.push(d.lines.forEach(w=>w));
             d.lines.forEach(w=>{
@@ -199,6 +199,50 @@ d3.json("data/all_series_lines.json")
         //     'containerWidth': 600,
         //     //invalidation
         //   }, word);
+        var garak1 = "";
+        var garak = [];
+        var gaycount = 0;
+        episode.GARAK.forEach(d => {
+            quark1 += " " + d;
+        });
+        garak1 = garak1
+            .trim()
+            .split(/[\s.]+/g)
+            .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
+            .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
+            .map((w) => w.replace(/['’]s$/g, ""))
+            .map((w)=>w.replace(/'/g, ''))
+            .map((w) => w.substring(0, 30))
+            .map((w) => w.toLowerCase())
+            .filter((w) => w && !stopwords.has(w));
+        if(garak1=="Bashir" ||garak1=="bashir"||garak1=="Doctor"||garak1== "Julian"||garak1=="doctor"||garak1=="julian"){
+            gaycount+=1;
+        }
+
+        garakGay = [];
+        garakGay.push({ "episode": number, "gayness": gaycount });
+        garakGay.push({ "year": number, "value": gaycount });
+
+
+
+        lines = new LineChart({
+            'parentElement': '#garakGay',
+            'containerHeight': 350,
+            'containerWidth': 600
+          }, garakGay);
+          lines.tp = '#tooltip';
+          lines.svg.append("text")
+            .attr("transform", "rotate(-90)")
+            .attr("x", -(lines.height / 2))
+            .attr("y", 15)
+            .style("text-anchor", "middle")
+            .text('Gayness');
+          lines.svg.append("text")
+          .attr("x", lines.width / 2)
+          .attr("y", 15)
+          .attr("text-anchor", "middle")
+          .style("font-size", "16px")
+          .text('How Gay is Garak?');
     });
 //console.log(linesData);
 d3.select('#chars').on('change', function () {
