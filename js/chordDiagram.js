@@ -51,9 +51,9 @@ var names = ['SISKO', 'ODO', 'BASHIR', 'DAX', 'JAKE', 'OBRIEN', 'QUARK', 'KIRA',
 //         const colors = ['#FF99E6', '#CCFF1A', '#FF1A66', '#E6331A', '#33FFCC',
 // '#66994D', '#B366CC', '#4D8000', '#B33300', '#CC80CC']
 
-var colors = d3.scaleOrdinal()
+var color = d3.scaleOrdinal()
     .domain(names)
-    .range(d3.schemeSet2);
+    .range(d3.schemeCategory10);
 
 //   console.log(colors[0])
 
@@ -65,7 +65,7 @@ var colors = d3.scaleOrdinal()
 
 // give this matrix to d3.chord(): it will calculates all the info we need to draw arc and ribbon
 const res = d3.chord()
-    .padAngle(0.05)
+    .padAngle(0.09)
     .sortSubgroups(d3.descending)
     (matrix)
 
@@ -77,7 +77,7 @@ svg
     .data(function (d) { return d.groups; })
     .join("g")
     .append("path")
-    .style("fill", (d, i) => colors(i))
+    .style("fill", (d, i) => color(i))
     .style("stroke", "black")
     .attr("d", d3.arc()
         .innerRadius(200)
@@ -85,27 +85,26 @@ svg
     )
 
 
-var tooltip = d3.select("#my_dataviz")
-    .append("div")
-    .style("opacity", 0)
-    .attr("class", "tooltip")
-    .style("background-color", "white")
-    .style("border", "solid")
-    .style("border-width", "1px")
-    .style("border-radius", "5px")
-    .style("padding", "10px")
+    
 // Add the links between groups
 
 //tooltip doesn't show up
 
 const showTooltip = function (event, d) {
     console.log(names[d.source.index] + names[d.target.index])
+    var tooltip = d3.select('#tooltip')
+
     tooltip
         .style("opacity", 1)
-        .html("Source: " + names[d.source.index] + "<br>Target: " + names[d.target.index])
-        .style("left", event.x + "px")
-        .style("top", event.y + "px")
+        .html('Source: ' + names[d.source.index] + ' Target: ' + names[d.target.index])
+        // .html(" Target: " +  + "<br>Source: " + )
+        .style("left", event.screenX + "px")
+        .style("top", event.screnY + "px")
+
 }
+
+
+
 
 // A function that change this tooltip when the leaves a point: just need to set opacity to 0 again
 var hideTooltip = function (d) {
@@ -124,10 +123,10 @@ svg
     .attr("d", d3.ribbon()
         .radius(200) //starting point- may be off by a bit, but should fit
     )
-    .style("fill", d => colors(d.source.index)) // colors depend on the source group. Change to target otherwise.
+    .style("fill", d => color(d.source.index)) // colors depend on the source group. Change to target otherwise.
     .style("stroke", "black")
     .on("mouseover", showTooltip)
-    .on("mouseleave", hideTooltip)
+// .on("mouseleave", hideTooltip)
 
 
 //  svg = d3.select("#my_dataviz")
@@ -136,9 +135,6 @@ svg
 
 // create a list of keys
 
-var color = d3.scaleOrdinal()
-    .domain(names)
-    .range(d3.schemeSet2);
 
 // console.log()
 // Usually you have a color scale in your chart already
@@ -178,12 +174,15 @@ var group = svg
         return d.groups;
     })
     .enter()
+
+
 group.append('text')
     .attr('transform', function (d) {
         return 'translate(' +
             res
-                .innerRadius(200)
-                .outerRadius(210).startAngle(d.startAngle)
+                // .innerRadius(200)
+                // .outerRadius(210)
+                .startAngle(d.startAngle)
                 .endAngle(d.endAngle)
                 .centroid() // this is an array, so will automatically be printed out as x,y
             + ')'

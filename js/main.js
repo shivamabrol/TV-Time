@@ -352,6 +352,7 @@ function changeEpisode(id, value) {
         node.innerHTML = ""
         // newNode.appendChild(document.createTextNode('Characters who spoke in this episdoe are ' + characters_who_spoke));
         // document.write("<br>");
+
         newNode.appendChild(document.createTextNode(' Character who spoke the most is ' + index));
 
 
