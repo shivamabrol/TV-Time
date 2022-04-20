@@ -1,6 +1,6 @@
 var linesData = [];
 var stopwords = new Set("i,me,my,myself,we,us,our,ours,ourselves,you,your,yours,yourself,yourselves,he,him,his,himself,she,her,hers,herself,it,its,itself,they,them,their,theirs,themselves,what,which,who,whom,whose,this,that,these,those,am,is,are,was,were,be,been,being,have,has,had,having,do,does,did,doing,will,would,should,can,could,ought,im,youre,hes,shes,its,were,theyre,ive,youve,weve,theyve,id,youd,hed,shed,wed,theyd,ill,youll,hell,shell,well,theyll,isnt,arent,wasnt,werent,hasnt,havent,hadnt,doesnt,dont,didnt,wont,wouldnt,shant,shouldnt,cant,cannot,couldnt,mustnt,lets,thats,whos,whats,heres,theres,whens,wheres,whys,hows,a,an,the,and,but,if,or,because,as,until,while,of,at,by,for,with,about,against,between,into,through,during,before,after,above,below,to,from,up,upon,down,in,out,on,off,over,under,again,further,then,once,here,there,when,where,why,how,all,any,both,each,few,more,most,other,some,such,no,nor,not,only,own,same,so,than,too,very,say,says,said,shall".split(","));
-
+var garakGay = [];
 d3.json("data/all_series_lines.json")
     .then(function (da) {
         let ds9 = da.DS9;
@@ -24,8 +24,8 @@ d3.json("data/all_series_lines.json")
                 .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                 .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                 .map((w) => w.replace(/['’]s$/g, ""))
-                .map((w)=>w.replace(/'/g, ''))
-                .map((w)=>w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
                 .map((w) => w.substring(0, 30))
                 .map((w) => w.toLowerCase())
                 .filter((w) => w && !stopwords.has(w));
@@ -42,7 +42,7 @@ d3.json("data/all_series_lines.json")
                 .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                 .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                 .map((w) => w.replace(/['’]s$/g, ""))
-                .map((w)=>w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
                 .map((w) => w.substring(0, 30))
                 .map((w) => w.toLowerCase())
                 .filter((w) => w && !stopwords.has(w));
@@ -59,7 +59,7 @@ d3.json("data/all_series_lines.json")
                 .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                 .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                 .map((w) => w.replace(/['’]s$/g, ""))
-                .map((w)=>w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
                 .map((w) => w.substring(0, 30))
                 .map((w) => w.toLowerCase())
                 .filter((w) => w && !stopwords.has(w));
@@ -76,7 +76,7 @@ d3.json("data/all_series_lines.json")
                 .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                 .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                 .map((w) => w.replace(/['’]s$/g, ""))
-                .map((w)=>w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
                 .map((w) => w.substring(0, 30))
                 .map((w) => w.toLowerCase())
                 .filter((w) => w && !stopwords.has(w));
@@ -93,7 +93,7 @@ d3.json("data/all_series_lines.json")
                 .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                 .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                 .map((w) => w.replace(/['’]s$/g, ""))
-                .map((w)=>w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
                 .map((w) => w.substring(0, 30))
                 .map((w) => w.toLowerCase())
                 .filter((w) => w && !stopwords.has(w));
@@ -110,7 +110,7 @@ d3.json("data/all_series_lines.json")
                 .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                 .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                 .map((w) => w.replace(/['’]s$/g, ""))
-                .map((w)=>w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
                 .map((w) => w.substring(0, 30))
                 .map((w) => w.toLowerCase())
                 .filter((w) => w && !stopwords.has(w));
@@ -127,11 +127,12 @@ d3.json("data/all_series_lines.json")
                 .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                 .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                 .map((w) => w.replace(/['’]s$/g, ""))
-                .map((w)=>w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
                 .map((w) => w.substring(0, 30))
                 .map((w) => w.toLowerCase())
                 .filter((w) => w && !stopwords.has(w));
             quark.push(quark1);
+
 
             var kira1 = "";
             var kira = [];
@@ -144,7 +145,7 @@ d3.json("data/all_series_lines.json")
                 .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                 .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                 .map((w) => w.replace(/['’]s$/g, ""))
-                .map((w)=>w.replace(/'/g, ''))
+                .map((w) => w.replace(/'/g, ''))
                 .map((w) => w.substring(0, 30))
                 .map((w) => w.toLowerCase())
                 .filter((w) => w && !stopwords.has(w));
@@ -173,76 +174,86 @@ d3.json("data/all_series_lines.json")
                     .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
                     .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
                     .map((w) => w.replace(/['’]s$/g, ""))
-                    .map((w)=>w.replace(/'/g, ''))
+                    .map((w) => w.replace(/'/g, ''))
                     .map((w) => w.substring(0, 30))
                     .map((w) => w.toLowerCase())
                     .filter((w) => w && !stopwords.has(w));
                 ezri.push(ezri1);
                 linesData.push({ "episode": number, "char": "ezri", "lines": ezri });
             }
+
+            if (episode.GARAK == undefined) {
+
+               // garakGay.push({ "year": number, "value": 0 });
+
+            }
+            else {
+                var garak1 = "";
+                var garak = [];
+                var gaycount = 0;
+                // console.log(episode.GARAK);
+                episode.GARAK.forEach(d => {
+                    garak1 += " " + d;
+                });
+                // console.log(garak1);
+                garak1 = garak1
+                    .trim()
+                    .split(/[\s.]+/g)
+                    .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
+                    .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
+                    .map((w) => w.replace(/['’]s$/g, ""))
+                    .map((w) => w.replace(/'/g, ''))
+                    .map((w) => w.substring(0, 30))
+                    .map((w) => w.toLowerCase())
+                    .filter((w) => w && !stopwords.has(w));
+                //console.log(garak1);
+                garak1.forEach(d => {
+                    //console.log(d);
+                    if (d == "Bashir" || d == "bashir" || d == "Doctor" || d == "Julian" || d == "doctor" || d == "julian") {
+                        gaycount += 1;
+                    }
+                });
+
+
+                // garakGay.push({ "episode": number, "gayness": gaycount });
+                if (gaycount>0){
+                garakGay.push({ "year": number, "value": gaycount });
+                }
+            }
         });
         var allWords = [];
-        linesData.filter(d=> d.char =="kira").forEach(d => {
+        linesData.filter(d => d.char == "kira").forEach(d => {
             //allWords = allWords.concat(d.lines);
-           //allWords.push(d.lines.forEach(w=>w));
-            d.lines.forEach(w=>{
-               // allWords.push(w);
-               allWords = allWords.concat(w);
+            //allWords.push(d.lines.forEach(w=>w));
+            d.lines.forEach(w => {
+                // allWords.push(w);
+                allWords = allWords.concat(w);
             });
         });
-        word =["Hello", "world", "normally", "you", "want", "more", "words",
-        "than", "this"];
-        //console.log(allWords+ 'h');
-        // wordCloud = new WordCloud({
-        //     'parentElement': '#wordCloud',
-        //     'containerHeight': 350,
-        //     'containerWidth': 600,
-        //     //invalidation
-        //   }, word);
-        var garak1 = "";
-        var garak = [];
-        var gaycount = 0;
-        episode.GARAK.forEach(d => {
-            quark1 += " " + d;
-        });
-        garak1 = garak1
-            .trim()
-            .split(/[\s.]+/g)
-            .map((w) => w.replace(/^[“‘"\-—()[\]{}]+/g, ""))
-            .map((w) => w.replace(/[;:.!?()[\]{},"'’”\-—]+$/g, ""))
-            .map((w) => w.replace(/['’]s$/g, ""))
-            .map((w)=>w.replace(/'/g, ''))
-            .map((w) => w.substring(0, 30))
-            .map((w) => w.toLowerCase())
-            .filter((w) => w && !stopwords.has(w));
-        if(garak1=="Bashir" ||garak1=="bashir"||garak1=="Doctor"||garak1== "Julian"||garak1=="doctor"||garak1=="julian"){
-            gaycount+=1;
-        }
-
-        garakGay = [];
-        garakGay.push({ "episode": number, "gayness": gaycount });
-        garakGay.push({ "year": number, "value": gaycount });
-
-
-
         lines = new LineChart({
             'parentElement': '#garakGay',
             'containerHeight': 350,
-            'containerWidth': 600
-          }, garakGay);
-          lines.tp = '#tooltip';
-          lines.svg.append("text")
+            'containerWidth': 1000
+        }, garakGay);
+        lines.tp = '#tooltip5';
+        lines.svg.append("text")
             .attr("transform", "rotate(-90)")
             .attr("x", -(lines.height / 2))
             .attr("y", 15)
             .style("text-anchor", "middle")
             .text('Gayness');
-          lines.svg.append("text")
-          .attr("x", lines.width / 2)
-          .attr("y", 15)
-          .attr("text-anchor", "middle")
-          .style("font-size", "16px")
-          .text('How Gay is Garak?');
+        lines.svg.append("text")
+            .attr("x", lines.width / 2)
+            .attr("y", 15)
+            .attr("text-anchor", "middle")
+            .style("font-size", "16px")
+            .text('How Gay is Garak?');
+        lines.svg.append("text")
+            .attr("class", "y label")
+            .attr("text-anchor", "end")
+            .attr("x", lines.width)
+            .attr("y", lines.height - 6)
+            .text('episodes');
     });
 //console.log(linesData);
 d3.select('#chars').on('change', function () {
@@ -307,7 +318,7 @@ function getSceneInfo(season, episode) {
             break;
         }
     })
-    
+
 }
 
 
@@ -418,10 +429,10 @@ function changeEpisode(id, value) {
         //-----------Bar Chart-------------------
 
         let barTimeYear = new BarChart({
-                'parentElement': '#barChart' + id,
-                'containerHeight': 350,
-                'containerWidth': 600
-            }, chartData);
+            'parentElement': '#barChart' + id,
+            'containerHeight': 350,
+            'containerWidth': 600
+        }, chartData);
 
 
 

@@ -25,18 +25,18 @@ class LineChart {
 
         vis.xValue = d => d.year;
         vis.yValue = d => d.value;
-        vis.tp = '#tooltip';
+        vis.tp = '#tooltip5';
 
         vis.colorPalette = d3.scaleOrdinal(d3.schemeTableau10);
         vis.colorPalette.domain("percent", "max", "median", "daysaqi");
 
         vis.xScale = d3.scaleLinear()
-            .domain(d3.extent(vis.data, vis.xValue)) 
-            .range([0, vis.width]);
+        .domain(d3.extent(vis.data, vis.xValue)) 
+        .range([0, vis.width]);
 
         vis.yScale = d3.scaleLinear()
-            .domain([-10, d3.max(vis.data, d => d.value)])
-            .range([vis.height, 0])
+        .domain([0, d3.max(vis.data, d => d.value)])
+        .range([vis.height, 0])
             .nice();
         //console.log('made scales');
 
@@ -64,21 +64,17 @@ class LineChart {
     updateVis() {
         let vis = this;
 
-        vis.svg.append("text")
-            .attr("class", "y label")
-            .attr("text-anchor", "end")
-            .attr("x", vis.width)
-            .attr("y", vis.height - 6)
-            .text('years');
+        
 
         vis.keysAll = [];
         vis.data.forEach(d => {
             //console.log(d);
-            vis.keysAll.push(d.type)});
+            vis.keysAll.push(d.type)
+        });
         function onlyUnique(value, index, self) {
             return self.indexOf(value) === index;
         }
-        
+
         vis.keys = vis.keysAll.filter(onlyUnique);
         // console.log(vis.keysAll);
         // console.log(vis.keys);
@@ -88,7 +84,7 @@ class LineChart {
             .enter()
             .append("circle")
             .attr("cx", 500)
-            .attr("cy", function (d, i) { return 10 + i * 25 }) 
+            .attr("cy", function (d, i) { return 10 + i * 25 })
             .attr("r", 4)
             .style("fill", function (d) { return vis.colorPalette(d) })
 
@@ -98,7 +94,7 @@ class LineChart {
             .enter()
             .append("text")
             .attr("x", 520)
-            .attr("y", function (d, i) { return 10 + i * 25 }) 
+            .attr("y", function (d, i) { return 10 + i * 25 })
             .style("fill", function (d) { return vis.colorPalette(d) })
             .text(function (d) { return d })
             .attr("text-anchor", "left")
@@ -115,11 +111,11 @@ class LineChart {
             .range([0, vis.width])
 
         vis.yScale = d3.scaleLinear()
-            .domain([-10, d3.max(vis.data, d => d.value)])
+            .domain([0, d3.max(vis.data, d => d.value)])
             .range([vis.height, 0])
             .nice();
 
-        console.log('made scales');
+        //console.log('made scales');
 
         vis.groups = d3.group(vis.data, d => d.type)
 
@@ -176,44 +172,42 @@ class LineChart {
                     .y(function (d) { return vis.yScale(d.value); })
                     (d[1])
             });
-            // .on('mouseover', (event, d) => {
-            //     console.log("mouse over! ");
-            //     console.log(event);
-            //     console.log(d);
+        // .on('mouseover', (event, d) => {
+        //     console.log("mouse over! ");
+        //     console.log(event);
+        //     console.log(d);
 
-            //     d3.select(vis.tp)
-            //         .style('display', 'block')
-            //         .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
-            //         .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-            //         .html(`
-            //     <div class="tooltip-title">${d.year}</div>
-            //     <ul>
-            //       <li> y value: ${d.value}</li>
-            //       <li>days type of data: ${d.type}</li>
-            //     </ul>
-            //   `);
-            // })
-            // .on('mouseleave', () => {
-            //     d3.select(vis.tp).style('display', 'none');
-            // });
+        //     d3.select(vis.tp)
+        //         .style('display', 'block')
+        //         .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
+        //         .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+        //         .html(`
+        //     <div class="tooltip-title">${d.year}</div>
+        //     <ul>
+        //       <li> y value: ${d.value}</li>
+        //       <li>days type of data: ${d.type}</li>
+        //     </ul>
+        //   `);
+        // })
+        // .on('mouseleave', () => {
+        //     d3.select(vis.tp).style('display', 'none');
+        // });
 
         vis.circles
-            .on('mouseover', (event, d) => {
-                console.log("mouse over! ");
-                console.log(event);
-                console.log(d);
+            .on('mouseover', function (event, d) {
+                console.log(d)
 
+                //create a tool tip
                 d3.select(vis.tp)
-                    .style('display', 'block')
-                    .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
-                    .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
+                    .style('opacity', 1)
+                    .style('z-index', 1000000)
                     .html(`
-                <div class="tooltip-title">${d.year}</div>
-                <ul>
-                  <li> y value: ${d.value}</li>
-                  <li>days type of data: ${d.type}</li>
-                </ul>
-              `);
+              <div class="tooltip-title">episode: ${d.year}</div>
+              <ul>
+                <li> Gayness: ${d.value}</li>
+
+              </ul>
+            `);
             })
             .on('mouseleave', () => {
                 d3.select(vis.tp).style('display', 'none');
