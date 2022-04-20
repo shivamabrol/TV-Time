@@ -39,16 +39,23 @@ function WordCloud(text, {
 
     const g = svg.append("g").attr("transform", `translate(${marginLeft},${marginTop})`);
 
+    var color = d3.scaleOrdinal()
+    .domain([0, 10])
+    .range(d3.schemeCategory10);
+
     const cloud = d3Cloud()
         .size([width - marginLeft - marginRight, height - marginTop - marginBottom])
         .words(data)
         .padding(padding)
         .rotate(rotate)
         .font(fontFamily)
+
         .fontSize(d => Math.sqrt(d.size) * fontScale)
         .on("word", ({ size, x, y, rotate, text }) => {
             g.append("text")
                 .attr("font-size", size)
+                .style("font-family", "Impact")
+                .style('fill', color(size))
                 .attr("transform", `translate(${x},${y}) rotate(${rotate})`)
                 .text(text);
         });
@@ -57,6 +64,8 @@ function WordCloud(text, {
     // invalidation && invalidation.then(() => cloud.stop()); //not necessary 
     // return svg.node();//not necessary for this code
 }
+
+
 
 
 function charSelectWC() {
