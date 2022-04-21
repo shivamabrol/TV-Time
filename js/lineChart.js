@@ -172,46 +172,28 @@ class LineChart {
                     .y(function (d) { return vis.yScale(d.value); })
                     (d[1])
             });
-        // .on('mouseover', (event, d) => {
-        //     console.log("mouse over! ");
-        //     console.log(event);
-        //     console.log(d);
-
-        //     d3.select(vis.tp)
-        //         .style('display', 'block')
-        //         .style('left', (event.pageX + vis.config.tooltipPadding) + 'px')
-        //         .style('top', (event.pageY + vis.config.tooltipPadding) + 'px')
-        //         .html(`
-        //     <div class="tooltip-title">${d.year}</div>
-        //     <ul>
-        //       <li> y value: ${d.value}</li>
-        //       <li>days type of data: ${d.type}</li>
-        //     </ul>
-        //   `);
-        // })
-        // .on('mouseleave', () => {
-        //     d3.select(vis.tp).style('display', 'none');
-        // });
 
         vis.circles
-            .on('mouseover', function (event, d) {
-                console.log(d)
-
-                //create a tool tip
-                d3.select(vis.tp)
-                    .style('opacity', 1)
-                    .style('z-index', 1000000)
-                    .html(`
-              <div class="tooltip-title">episode: ${d.year}</div>
+        .on('mouseover', function (event, d) { 
+        
+            //create a tool tip
+            d3.select(vis.tp)
+              .style('opacity', 1)
+              .style('z-index', 1000000)
+              .html(`
+              <div class="tooltip-title">Episode: ${d.year}</div>
               <ul>
-                <li> Gayness: ${d.value}</li>
+                <li> gayness: ${d.value}</li>
 
               </ul>
-            `);
-            })
-            .on('mouseleave', () => {
-                d3.select(vis.tp).style('display', 'none');
-            });
+            `);        
+          })
+          .on('mousemove', (event) => {
+            //position the tooltip
+            d3.select(vis.tp)
+              .style('left', (event.pageX + 10) + 'px')
+              .style('top', (event.pageY + 10) + 'px');
+          });
         vis.xAxisG.call(vis.xAxis);
         vis.yAxisG.call(vis.yAxis);
         //console.log('made chart');
