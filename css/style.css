@@ -35,3 +35,49 @@
     /* background-repeat: no-repeat; */
     /* opacity: 0.4; */
 }
+
+
+.grid-container {
+  /* border:5px solid red; */
+  padding: 1rem; 
+  width: 800px;
+  float: left;
+}
+
+
+.grid-container-2{
+  /* border:5px solid yellow; */
+  padding: 1rem; 
+  width: 800px;
+  float: right;
+}
+
+.grid-container-3{
+  /* border:5px solid green; */
+  padding: 1rem; 
+  width: 800px;
+  height: 800px;
+  float: left;
+}
+
+ #drop1{
+  /* border: 5px solid green; */
+  padding: 1rem;
+  border-image: url(../images/bashir.jpeg) 110 round;
+  height: auto;
+  width: auto;
+}
+
+#wordStuff{
+  /* border: 5px solid green; */
+  padding: 1rem;
+  border-image: url(../images/bashir.jpeg) 110 round;
+  height: auto;
+  width: auto;
+}
+
+/* div {
+  height: 800px;
+  width: 50%;
+  background-color: powderblue;
+} */

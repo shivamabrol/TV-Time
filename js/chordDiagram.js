@@ -1,29 +1,29 @@
-function getSceneInfo(season, episode) {
+// function getSceneInfo(season, episode) {
 
-    d3.json("data/all_scripts_raw.json").then(data => {
-        for (let i = 0; i < 170; i++) {
-            let episode = data['DS9']['episode ' + String(i)];
-            let scenes = (episode.split(/\n\[.*\]\n\n/));
-            for (let j = 1; j < scenes.length; j++) {
-                let scene = scenes[j];
-                let dialogue = scene.split(/[A-Z]+:/)
-                dialogue.shift()
-                const regex = /[A-Z]+:/g;
-                //Reference string
-                //Using matchAll() method
-                let chars = [...scene.matchAll(regex)];
-                for (let char = 0; char < chars.length; char++) {
-                    console.log(chars[char][0]);
-                }
-                break;
+//     d3.json("data/all_scripts_raw.json").then(data => {
+//         for (let i = 0; i < 170; i++) {
+//             let episode = data['DS9']['episode ' + String(i)];
+//             let scenes = (episode.split(/\n\[.*\]\n\n/));
+//             for (let j = 1; j < scenes.length; j++) {
+//                 let scene = scenes[j];
+//                 let dialogue = scene.split(/[A-Z]+:/)
+//                 dialogue.shift()
+//                 const regex = /[A-Z]+:/g;
+//                 //Reference string
+//                 //Using matchAll() method
+//                 let chars = [...scene.matchAll(regex)];
+//                 for (let char = 0; char < chars.length; char++) {
+//                     console.log(chars[char][0]);
+//                 }
+//                 break;
 
-            }
+//             }
 
-            break;
-        }
-    })
+//             break;
+//         }
+//     })
 
-}
+// }
 
 
 // create the svg area
@@ -32,7 +32,7 @@ const svg = d3.select("#my_dataviz")
     // .attr("width", 5000)
     // .attr("height", 5000)
     .append("g")
-    .attr("transform", "translate(250,250)")
+    .attr("transform", "translate(300,300)")
 
 // create a matrix
 const matrix = [[0, 323, 326, 319, 146, 0, 223, 358, 167, 49],
@@ -166,25 +166,25 @@ svg.selectAll("mylabels")
 
 
 // this group object use each group of the data.groups object
-var group = svg
-    .datum(res)
-    .append("g")
-    .selectAll("g")
-    .data(function (d) {
-        return d.groups;
-    })
-    .enter()
+// var group = svg
+//     .datum(res)
+//     .append("g")
+//     .selectAll("g")
+//     .data(function (d) {
+//         return d.groups;
+//     })
+//     .enter()
 
 
-group.append('text')
-    .attr('transform', function (d) {
-        return 'translate(' +
-            res
-                // .innerRadius(200)
-                // .outerRadius(210)
-                .startAngle(d.startAngle)
-                .endAngle(d.endAngle)
-                .centroid() // this is an array, so will automatically be printed out as x,y
-            + ')'
-    })
+// group.append('text')
+//     .attr('transform', function (d) {
+//         return 'translate(' +
+//             res
+//                 // .innerRadius(200)
+//                 // .outerRadius(210)
+//                 .startAngle(d.startAngle)
+//                 .endAngle(d.endAngle)
+//                 .centroid() // this is an array, so will automatically be printed out as x,y
+//             + ')'
+//     })
 

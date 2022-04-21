@@ -35,12 +35,12 @@ function WordCloud(text, {
         .attr("width", width)
         .attr("font-family", fontFamily)
         .attr("text-anchor", "middle")
-        .attr("style", "max-width: 100%; height: auto; height: intrinsic;");
+        .attr("style", "max-width: 100%; height: auto; width: intrinsic;");
 
     const g = svg.append("g").attr("transform", `translate(${marginLeft},${marginTop})`);
 
     var color = d3.scaleOrdinal()
-    .domain([0, 10])
+    .domain([0, 50])
     .range(d3.schemeCategory10);
 
     const cloud = d3Cloud()

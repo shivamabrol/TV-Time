@@ -359,13 +359,14 @@ function changeSeason(id, value) {
 
 function changeEpisode(id, value) {
 
-
     d3.json("data/all_series_lines.json").then(data => {
         let episode_no = 0,
             season = document.getElementById("season_" + id + "_id").value;
         episode_no = parseInt(season - 1) * 26 + parseInt(value);
 
         console.log(episode_no)
+
+        
         // console.log(episode_no - 1)
         let episode_data = ((data['DS9']['episode ' + String(episode_no)]))
         let speakers = Object.keys(episode_data)
@@ -435,10 +436,27 @@ function changeEpisode(id, value) {
         }, chartData);
 
 
-
-
     })
 
+}
+
+function chordDiagram() {
 
 
+    const matrix = [[0, 323, 326, 319, 146, 0, 223, 358, 167, 49],
+    [323, 0, 261, 227, 97, 0, 214, 283, 130, 38],
+    [326, 261, 0, 240, 98, 0, 202, 285, 142, 50],
+    [319, 227, 240, 0, 82, 0, 167, 262, 128, 0],
+    [146, 97, 98, 82, 0, 0, 84, 99, 43, 14],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [223, 214, 202, 167, 84, 0, 0, 203, 101, 31],
+    [358, 283, 285, 262, 99, 0, 203, 0, 144, 36],
+    [167, 130, 142, 128, 43, 0, 101, 144, 0, 36],
+    [49, 38, 50, 0, 14, 0, 31, 36, 36, 0]];
+
+    let chord = new Chord({
+        'parentElement': '#my_datavis',
+        'containerHeight': 700,
+        'containerWidth': 700
+    }, matrix);
 }
