@@ -369,15 +369,14 @@ function charSelect(value){
 
         let seasonChecker = [0,0,0,0,0,0,0];
 
+        let lineData = [];
+        let bar1Data = [];
+        let bar2Data = [];
+
         for(let id = 1; id <= 172; id++){ 
             // console.log(episode_no - 1)
             let episode_data = ((data['DS9']['episode ' + String(id)]))
-            let speakers = Object.keys(episode_data)
-            let max = -1;
-            let index = "";
-            let characters_who_spoke = []
-
-            let chartData = []
+            let speakers = Object.keys(episode_data);
 
             if (speakers.includes(value.toUpperCase())){
                 epCounter[id] = epCounter[id-1] + 1
@@ -392,17 +391,21 @@ function charSelect(value){
                    }
                 }
                 seasonLines[Math.ceil(id/26)] += epLines[id];
+                lineData.push({"episode": id, "value": epCounter[id]});
+                bar1Data.push({key: id, value: epLines[id]});
             }
             else{
-                epCounter[id] = epCounter[id-1]
+                epCounter[id] = epCounter[id-1];
                 epLines[id] = 0;
             }
         }
+
 
         var seasonInfo = document.getElementById('SeasonInfo');
         let seasonStr = "Appears in season(s)";
 
         for (let i = 1; i <= 7; i++){
+            bar2Data.push({key: i, value: seasonLines[i]});
             if(seasonChecker[i] == 1){
                 seasonStr = seasonStr + " " + String(i) + ",";
             }
