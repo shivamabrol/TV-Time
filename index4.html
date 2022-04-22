@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Character-specific info</title>
+    <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+
+    <div class="chars">
+        <label for="chars">Choose a Character:</label>
+        <select name="chars" id="chars" onchange="charSelect(this.value)">
+        <!-- <select name="chars" id="chars"> -->
+
+            <option value="sisko">Benjamin Sisko</option>
+            <option value="odo">Odo</option>
+            <option value="bashir">Julian Bashir</option>
+            <option value="dax">Jadzia Dax</option>
+            <option value="jake">Jake Sisko</option>
+            <option value="obrien">Miles O'Brien</option>
+            <option value="quark">Quark</option>
+            <option value="kira">Kira Nerys</option>
+            <option value="worf">Worf</option>
+            <option value="ezri">Ezri Dax</option>
+        </select>
+    </div>
+
+    <br>
+
+    <p id = "SeasonInfo" style="display: none">
+        Character season info
+    </p>
+
+    <script src="js/d3-cloud-master/build/d3.layout.cloud.js"></script>
+
+    <script src="js/d3.v6.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/lineChart.js"></script>
+    <script src="js/barChart.js"></script>
+    
+    <div class="charDiv">
+        <p id="characterinfo1"></p>
+
+        <svg id="charChart1" style="border: 1px solid black"></svg>
+        <br>
+        <svg id="charChart1" style="border: 1px solid black"></svg>
+        <br>
+        <svg id="charChart2" style="border: 1px solid black"></svg>
+    </div>
+</body>
+
+</html>

@@ -355,7 +355,63 @@ function changeSeason(id, value) {
     }
 }
 
+function charSelect(value){
+    console.log(value)
 
+    d3.json("data/all_series_lines.json").then(data => {
+        let epCounter = [];
+        epCounter[0] = 0;
+
+        let epLines = [];
+        epLines[0] = 0;
+
+        let seasonLines = [0,0,0,0,0,0,0,0];
+
+        let seasonChecker = [0,0,0,0,0,0,0];
+
+        for(let id = 1; id <= 172; id++){ 
+            // console.log(episode_no - 1)
+            let episode_data = ((data['DS9']['episode ' + String(id)]))
+            let speakers = Object.keys(episode_data)
+            let max = -1;
+            let index = "";
+            let characters_who_spoke = []
+
+            let chartData = []
+
+            if (speakers.includes(value.toUpperCase())){
+                epCounter[id] = epCounter[id-1] + 1
+                seasonChecker[Math.ceil(id/26)] = 1;
+
+                // all pairs (label, frequencies) to an array of arrays(2)
+                epLines[id] = 0;
+
+                for (var key in episode_data){
+                   if (episode_data.hasOwnProperty(key) && key == value.toUpperCase()){
+                      epLines[id] += episode_data[key].length;
+                   }
+                }
+                seasonLines[Math.ceil(id/26)] += epLines[id];
+            }
+            else{
+                epCounter[id] = epCounter[id-1]
+                epLines[id] = 0;
+            }
+        }
+
+        var seasonInfo = document.getElementById('SeasonInfo');
+        let seasonStr = "Appears in season(s)";
+
+        for (let i = 1; i <= 7; i++){
+            if(seasonChecker[i] == 1){
+                seasonStr = seasonStr + " " + String(i) + ",";
+            }
+        }
+        seasonStr = seasonStr.substring(0, seasonStr.length - 1)
+        seasonInfo.innerHTML = seasonStr;
+        seasonInfo.style.display = "inline"
+    })
+}
 
 function changeEpisode(id, value) {
 
