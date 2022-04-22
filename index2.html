@@ -41,9 +41,9 @@
         </div>
 
 
-        </div>
+    </div>
 
- 
+
     </div>
     <div id="tooltip"></div>
 
@@ -51,41 +51,43 @@
     <div class="grid-container-gay">
         <img src="images/garak3.jpeg" />
         <div id="tooltip5"></div>
-        <svg id = 'garakGay'> </svg>
+        <svg id='garakGay'> </svg>
         <!-- <img src="images/garak2.jpeg" /> -->
     </div>
 
     <div class="grid-container-3">
 
-    <div class="grid-item" id="wordStuff">
-        <div class="grid-item">
-            <label for="chars">Choose a character:</label>
-            <select name="chars" id="chars" onchange="charSelectWC()">
-                <!-- <select name="chars" id="chars"> -->
+        <div class="grid-item" id="wordStuff">
+            <div class="grid-item">
+                <label for="chars">Choose a character:</label>
+                <select name="chars" id="chars" onchange="charSelectWC()">
+                    <!-- <select name="chars" id="chars"> -->
 
-                <option value="sisko">Benjamin Sisko</option>
-                <option value="odo">Odo</option>
-                <option value="bashir">Julian Bashir</option>
-                <option value="dax">Jadzia Dax</option>
-                <option value="jake">Jake Sisko</option>
-                <option value="o'brien">Miles O'Brien</option>
-                <option value="quark">Quark</option>
-                <option value="kira">Kira Nerys</option>
-                <option value="worf">Worf</option>
-                <option value="ezri">Ezri Dax</option>
-            </select>
+                    <option value="sisko">Benjamin Sisko</option>
+                    <option value="odo">Odo</option>
+                    <option value="bashir">Julian Bashir</option>
+                    <option value="dax">Jadzia Dax</option>
+                    <option value="jake">Jake Sisko</option>
+                    <option value="o'brien">Miles O'Brien</option>
+                    <option value="quark">Quark</option>
+                    <option value="kira">Kira Nerys</option>
+                    <option value="worf">Worf</option>
+                    <option value="ezri">Ezri Dax</option>
+                </select>
+            </div>
+            <svg id="wordCloud" width=800 height=800></svg>
         </div>
-        <svg id="wordCloud" width=800 height=800></svg>
-    </div>
-
-    <div class="grid-container-2">
 
 
-        <div id="new">
+
+
+
+
+        <div id="grid-container-5">
 
             <div class="season_vis">
                 <label for="season">Select a season:</label>
-    
+
                 <select name="season_1" id="season_1_id" onchange="chordDiagram()">
                     <option value="1">Season 1</option>
                     <option value="2">Season 2</option>
@@ -96,21 +98,47 @@
                     <option value="7">Season 7</option>
                 </select>
             </div>
-            <svg id="my_dataviz" width=700 height=700></svg>
+
+            <svg id="new_chord"></svg>
+
+
+            <div class="season_vis">
+                <label for="season">Select a season:</label>
+
+                <select name="season_3" id="season_3_id" onchange="chordDiagram2()">
+                    <option value="1">Season 1</option>
+                    <option value="2">Season 2</option>
+                    <option value="3">Season 3</option>
+                    <option value="4">Season 4</option>
+                    <option value="5">Season 5</option>
+                    <option value="6">Season 6</option>
+                    <option value="7">Season 7</option>
+                </select>
+            </div>
+            <svg id="new_chord_2"></svg>
+
         </div>
-    </div>
 
 
 
-    <script src="js/d3.v6.min.js"></script>
-    <script src="js/d3-cloud-master/build/d3.layout.cloud.js"></script>
 
-    <script src="js/main.js"></script>
-    <script src="js/wordc.js"></script>
-    <!-- <script src="js/chord.js"></script> -->
-    <script src="js/chordDiagram.js"></script>
-    <script src="js/lineChart.js"></script>
-    <script src="js/barChart.js"></script>
+        <div class="grid-container-4">
+
+            <!-- <svg id="my_dataviz"></svg> -->
+
+
+        </div>
+
+
+        <script src="js/d3.v6.min.js"></script>
+        <script src="js/d3-cloud-master/build/d3.layout.cloud.js"></script>
+
+        <script src="js/main.js"></script>
+        <script src="js/wordc.js"></script>
+        <script src="js/chord.js"></script>
+        <script src="js/chordDiagram.js"></script>
+        <script src="js/lineChart.js"></script>
+        <script src="js/barChart.js"></script>
 
 </body>
 

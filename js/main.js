@@ -531,6 +531,29 @@ function changeEpisode(id, value) {
 
 }
 
+function chordDiagram2() {
+
+
+    const matrix2 = [[29 ,30 ,26 ,19 ,14 ,27 ,12 ,26 ,10 ,31],
+    [30 ,31 ,18 ,27 ,35 ,21 ,27 ,33 ,23 ,26],
+    [26 ,18 ,15 ,17 ,18 ,39 ,17 ,38 ,10 ,15],
+    [19 ,27 ,17 ,21 ,26 ,23 ,16 ,37 ,38 ,14],
+    [14 ,35 ,18 ,26 ,13 ,26 ,37 ,36 ,28 ,37],
+    [27 ,21 ,39 ,23 ,26 ,10 ,39 ,13 ,24 ,21],
+    [12 ,27 ,17 ,16 ,37 ,39 ,17 ,39 ,24 ,23],
+    [26 ,33 ,38 ,37 ,36 ,13 ,39 ,28 ,11 ,39],
+    [10 ,23 ,10 ,38 ,28 ,24 ,24 ,11 ,25 ,18],
+    [31 ,26 ,15 ,14 ,37 ,21 ,23 ,39 ,18 ,12]]
+
+
+
+    let chord2 = new Chord({
+        'parentElement': '#new_chord_2',
+        'containerHeight': 700,
+        'containerWidth': 700
+    }, matrix2);
+}
+
 function chordDiagram() {
 
 
@@ -545,9 +568,11 @@ function chordDiagram() {
     [167, 130, 142, 128, 43, 0, 101, 144, 0, 36],
     [49, 38, 50, 0, 14, 0, 31, 36, 36, 0]];
 
+
     let chord = new Chord({
-        'parentElement': '#my_datavis',
+        'parentElement': '#new_chord',
         'containerHeight': 700,
         'containerWidth': 700
     }, matrix);
+
 }
