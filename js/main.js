@@ -392,6 +392,10 @@ function charSelect(value){
                     seasonChecker[Math.ceil(id/26)] = 1;
                     seasonLines[Math.ceil(id/26)] += epLines[id];
                 }
+                else{
+                    epCounter[id] = epCounter[id-1];
+                    epLines[id] = 0;
+                }
             }
             else{
                 epCounter[id] = epCounter[id-1];
@@ -422,6 +426,7 @@ function charSelect(value){
         var svg = d3.select("svg#charChart3");
         svg.selectAll("*").remove();
 
+        console.log(lineData)
         let line1 = new LineChart({
             'parentElement': '#charChart1',
             'containerHeight': 350,
