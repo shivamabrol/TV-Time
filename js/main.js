@@ -247,6 +247,7 @@ d3.json("data/all_series_lines.json")
             .attr("y", 15)
             .attr("text-anchor", "middle")
             .style("font-size", "16px")
+            .style("fill", "white")
             .text('How Gay is Garak?');
         lines.svg.append("text")
             .attr("class", "y label")
@@ -545,12 +546,11 @@ function chordDiagram2() {
     [10 ,23 ,10 ,38 ,28 ,24 ,24 ,11 ,25 ,18],
     [31 ,26 ,15 ,14 ,37 ,21 ,23 ,39 ,18 ,12]]
 
-
-
     let chord2 = new Chord({
         'parentElement': '#new_chord_2',
         'containerHeight': 700,
-        'containerWidth': 700
+        'containerWidth': 700,
+        'tp': 'tooltip1'
     }, matrix2);
 }
 
@@ -568,11 +568,11 @@ function chordDiagram() {
     [167, 130, 142, 128, 43, 0, 101, 144, 0, 36],
     [49, 38, 50, 0, 14, 0, 31, 36, 36, 0]];
 
-
     let chord = new Chord({
         'parentElement': '#new_chord',
-        'containerHeight': 700,
-        'containerWidth': 700
+        'containerHeight': 1000,
+        'containerWidth': 1000,
+        'tp': 'tooltip2'
     }, matrix);
 
 }

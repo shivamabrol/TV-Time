@@ -4,7 +4,8 @@ class Chord {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 500,
             containerHeight: _config.containerHeight || 200,
-            margin: { top: 10, bottom: 30, right: 50, left: 50 }
+            margin: { top: 10, bottom: 30, right: 50, left: 50 },
+            tp: _config.tp
         }
         this.data = _data;
         console.log(this.data);
@@ -63,12 +64,13 @@ class Chord {
                 .innerRadius(200)
                 .outerRadius(210) //just try this - may need to shift a little but should be close
             )
+            console.log(vis.config.tp)
+        vis.tooltip = d3.select('#tooltip1')
 
         const showTooltip = function (event, d) {
             console.log(vis.names[d.source.index] + vis.names[d.target.index])
-            var tooltip = d3.select('#tooltip')
 
-            tooltip
+            vis.tooltip
                 .style("opacity", 1)
                 .html('Source: ' + vis.names[d.source.index] + ' Target: ' + vis.names[d.target.index])
                 // .html(" Target: " +  + "<br>Source: " + )

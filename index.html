@@ -2,95 +2,212 @@
 <html>
 
 <head>
-    <title>Star Trek Deep Space 9 Info</title>
-    <link rel="icon" href="data:;base64,iVBORwOKGO=" />
-    <!-- <link rel="stylesheet" href="css/leaflet.css"> -->
-    <link rel="stylesheet" href="css/style.css">
-</head>
+    <style>
+        .item1 {
+            grid-area: header;
+        }
 
+        .item8 {
+            grid-area: header2;
+        }
+
+        .item2 {
+            grid-area: menu;
+        }
+
+        .item3 {
+            grid-area: main;
+        }
+
+        .item4 {
+            grid-area: right;
+        }
+
+        .item5 {
+            grid-area: footer;
+            background-image: url("images/bashir.jpeg");
+            background-blend-mode: darken;
+            color: aliceblue;
+        }
+
+        .item6 {
+            grid-area: new;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-areas:
+                'header header header header2 header2 header2'
+                'main main main right right right'
+                'footer footer footer footer footer footer'
+                'new new new new new new'
+            ;
+            gap: 10px;
+            background-color: #2196F3;
+            padding: 10px;
+        }
+
+        .grid-container>div {
+            background-color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            padding: 20px 0;
+            font-size: 30px;
+        }
+    </style>
+</head>
 
 <body>
 
-    
+    <h1>Grid Layout</h1>
 
-    <div class="chars">
-        <label for="chars">Choose a Character:</label>
-        <select name="chars" id="chars" onchange="charSelectWC()">
-        <!-- <select name="chars" id="chars"> -->
+    <p>This grid layout contains six columns and three rows:</p>
 
-            <option value="sisko">Benjamin Sisko</option>
-            <option value="odo">Odo</option>
-            <option value="bashir">Julian Bashir</option>
-            <option value="dax">Jadzia Dax</option>
-            <option value="jake">Jake Sisko</option>
-            <option value="o'brien">Miles O'Brien</option>
-            <option value="quark">Quark</option>
-            <option value="kira">Kira Nerys</option>
-            <option value="worf">Worf</option>
-            <option value="ezri">Ezri Dax</option>
-        </select>
+
+    <div class="grid-container">
+        <div class="item1">
+            <div class="first_vis">
+                <label for="season">Select a season:</label>
+
+                <select name="season_1" id="season_1_id" onchange="changeSeason(1, this.value)">
+                    <option value="1">Season 1</option>
+                    <option value="2">Season 2</option>
+                    <option value="3">Season 3</option>
+                    <option value="4">Season 4</option>
+                    <option value="5">Season 5</option>
+                    <option value="6">Season 6</option>
+                    <option value="7">Season 7</option>
+                </select>
+
+
+                <label for="episode_1">Select the episode no. :</label>
+
+                <select name="episode_1" id="episode_1_id" onchange="changeEpisode(1, this.value) ">
+                    <option value='1' selected='selected'>1</option>
+                </select>
+            </div>
+
+            <div class="grid-item" id="drop1">
+                <p id="characters_and_dialogue_1"></p>
+
+                <svg id="barChart1"></svg>
+
+            </div>
+        </div>
+        <div class="item8">
+            <div class="grid-item" id="wordStuff">
+                <div class="grid-item">
+                    <label for="chars">Choose a character alphs:</label>
+                    <select name="chars" id="chars" onchange="charSelectWC()">
+                        <!-- <select name="chars" id="chars"> -->
+
+                        <option value="sisko">Benjamin Sisko</option>
+                        <option value="odo">Odo</option>
+                        <option value="bashir">Julian Bashir</option>
+                        <option value="dax">Jadzia Dax</option>
+                        <option value="jake">Jake Sisko</option>
+                        <option value="o'brien">Miles O'Brien</option>
+                        <option value="quark">Quark</option>
+                        <option value="kira">Kira Nerys</option>
+                        <option value="worf">Worf</option>
+                        <option value="ezri">Ezri Dax</option>
+                    </select>
+                </div>
+                <svg id="wordCloud" style="border: 5px solid black;"></svg>
+            </div>
+
+        </div>
+        <div class="item3">
+            <div class="season_vis">
+                <label for="season">Select a season:</label>
+
+                <select name="season_1" id="season_1_id" onchange="chordDiagram()">
+                    <option value="1">Season 1</option>
+                    <option value="2">Season 2</option>
+                    <option value="3">Season 3</option>
+                    <option value="4">Season 4</option>
+                    <option value="5">Season 5</option>
+                    <option value="6">Season 6</option>
+                    <option value="7">Season 7</option>
+                </select>
+
+                <svg id="new_chord"></svg>
+
+            </div>
+        </div>
+        <div class="item4">
+            <div class="season_vis">
+                <label for="season">Select a season:</label>
+
+                <select name="season_3" id="season_3_id" onchange="chordDiagram2()">
+                    <option value="1">Season 1</option>
+                    <option value="2">Season 2</option>
+                    <option value="3">Season 3</option>
+                    <option value="4">Season 4</option>
+                    <option value="5">Season 5</option>
+                    <option value="6">Season 6</option>
+                    <option value="7">Season 7</option>
+                </select>
+
+                <svg id="new_chord_2"></svg>
+
+            </div>
+        </div>
+        <div class="item5">
+            
+            <div id="tooltip5"></div>
+            <svg id='garakGay'> </svg>
+            <img src="images/garak2.jpeg" />
+        </div>
+        <div class="item6">
+            
+            <div class="charDiv">
+                <div class="chars">
+                    <label for="chars">Choose a Character:</label>
+                    <select name="chars" id="chars" onchange="charSelect(this.value)">
+                        <!-- <select name="chars" id="chars"> -->
+
+                        <option value="sisko">Benjamin Sisko</option>
+                        <option value="odo">Odo</option>
+                        <option value="bashir">Julian Bashir</option>
+                        <option value="dax">Jadzia Dax</option>
+                        <option value="jake">Jake Sisko</option>
+                        <option value="obrien">Miles O'Brien</option>
+                        <option value="quark">Quark</option>
+                        <option value="kira">Kira Nerys</option>
+                        <option value="worf">Worf</option>
+                        <option value="ezri">Ezri Dax</option>
+                    </select>
+                </div>
+                <p id="characterinfo1"></p>
+
+                <p id="SeasonInfo" style="display: none"> 
+                    Character season info
+                </p>
+
+                <br>
+
+                <svg id="charChart1" style="border: 1px solid black"></svg>
+                <br>
+                <svg id="charChart2" style="border: 1px solid black"></svg>
+                <br>
+                <svg id="charChart3" style="border: 1px solid black"></svg>
+            </div>
+
+        </div>
     </div>
 
 
-    <div id="wc">
-        <svg id="wordCloud" width=800 height=800 style="border:1px solid black"></svg>
-    </div>
-
-
-    <!-- <script src="node_modules/d3-cloud/build/d3.layout.cloud.js"></script>
-    <script src="node_modules/d3-dispatch/dist/d3-dispatch.js"></script> -->
-    <script src="js/d3-cloud-master/build/d3.layout.cloud.js"></script>
 
     <script src="js/d3.v6.min.js"></script>
+    <script src="js/d3-cloud-master/build/d3.layout.cloud.js"></script>
+
     <script src="js/main.js"></script>
     <script src="js/wordc.js"></script>
-    <script src="js/barchart.js"></script>
-    
-    <p>
-        <a href="index4.html">View character-specific information</a>
-    </p>
+    <script src="js/chord.js"></script>
+    <script src="js/chordDiagram.js"></script>
+    <script src="js/lineChart.js"></script>
+    <script src="js/barChart.js"></script>
 
-    <p>
-        <a href="index2.html">See character wise interaction in an episode</a>
-    </p>
-
-    <p>
-        <a href="index3.html">How Gay is Garak?</a>
-    </p>
-
-
-    <div class="first_vis">
-        <label for="season">Select a season:</label>
-
-        <select name="season_1" id="season_1_id" onchange="changeSeason(1, this.value)">
-            <option value="1">Season 1</option>
-            <option value="2">Season 2</option>
-            <option value="3">Season 3</option>
-            <option value="4">Season 4</option>
-            <option value="5">Season 5</option>
-            <option value="6">Season 6</option>
-            <option value="7">Season 7</option>
-        </select>
-
-
-        <label for="episode_1">Select the episode no. :</label>
-
-        <select name="episode_1" id="episode_1_id" onchange="changeEpisode(1, this.value)">
-
-        </select>
-    </div>
-
-
-
-    <div class="charDiv">
-        <p id="characters_and_dialogue_1"></p>
-
-        <svg id="barChart1"></svg>
-
-
-    </div>
-
-
-
+</body>
 
 </html>
