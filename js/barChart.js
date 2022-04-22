@@ -1,5 +1,5 @@
 class BarChart {
-    constructor(_config, _data) {
+    constructor(_config, _data, _visible = true) {
         this.config = {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 500,
@@ -12,6 +12,7 @@ class BarChart {
         // Call a class function
         this.ylabel;
         this.title;
+        this.haveAxisVisible = _visible;
         this.initVis();
     }
     initVis() {
@@ -102,7 +103,7 @@ class BarChart {
             .attr("transform", "translate(0," + vis.height + ")")
             .call(d3.axisBottom(vis.xScale))
             .selectAll("text")
-            .style("text-anchor", "end")
+            .style("display", "none")
             .attr("dx", "-1em")
             .attr("dy", "-0.5em")
             .attr("transform", "rotate(90)")
@@ -127,16 +128,17 @@ class BarChart {
 
             .attr('width', vis.xScale.bandwidth())
 
-
-        vis.chart.append("g")
-            .attr("class", "axis")
-            .attr("transform", "translate(0," + vis.height + ")")
-            .call(d3.axisBottom(vis.xScale))
-            .selectAll("text")
-            .style("text-anchor", "end")
-            .attr("dx", "-1em")
-            .attr("dy", "-0.5em")
-            .attr("transform", "rotate(90)")
+        if (this.haveAxisVisible){
+            vis.chart.append("g")
+                .attr("class", "axis")
+                .attr("transform", "translate(0," + vis.height + ")")
+                .call(d3.axisBottom(vis.xScale))
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-1em")
+                .attr("dy", "-0.5em")
+                .attr("transform", "rotate(90)")
+        }
     }
 
 

@@ -379,9 +379,6 @@ function charSelect(value){
             let speakers = Object.keys(episode_data);
 
             if (speakers.includes(value.toUpperCase())){
-                epCounter[id] = epCounter[id-1] + 1
-                seasonChecker[Math.ceil(id/26)] = 1;
-
                 // all pairs (label, frequencies) to an array of arrays(2)
                 epLines[id] = 0;
 
@@ -390,14 +387,18 @@ function charSelect(value){
                       epLines[id] += episode_data[key].length;
                    }
                 }
-                seasonLines[Math.ceil(id/26)] += epLines[id];
-                lineData.push({"episode": id, "value": epCounter[id]});
-                bar1Data.push({key: id, value: epLines[id]});
+                if (epLines[id] > 0){
+                    epCounter[id] = epCounter[id-1] + 1
+                    seasonChecker[Math.ceil(id/26)] = 1;
+                    seasonLines[Math.ceil(id/26)] += epLines[id];
+                }
             }
             else{
                 epCounter[id] = epCounter[id-1];
                 epLines[id] = 0;
             }
+            lineData.push({"year": id, "value": epCounter[id]});
+            bar1Data.push({key: id, value: epLines[id]});
         }
 
 
@@ -412,8 +413,34 @@ function charSelect(value){
         }
         seasonStr = seasonStr.substring(0, seasonStr.length - 1)
         seasonInfo.innerHTML = seasonStr;
-        seasonInfo.style.display = "inline"
+        seasonInfo.style.display = "inline";
+
+        var svg = d3.select("svg#charChart1");
+        svg.selectAll("*").remove();
+        var svg = d3.select("svg#charChart2");
+        svg.selectAll("*").remove();
+        var svg = d3.select("svg#charChart3");
+        svg.selectAll("*").remove();
+
+        let line1 = new LineChart({
+            'parentElement': '#charChart1',
+            'containerHeight': 350,
+            'containerWidth': 1000
+        }, lineData);
+
+        let bar1 = new BarChart({
+            'parentElement': '#charChart2',
+            'containerHeight': 350,
+            'containerWidth': 1000
+        }, bar1Data, false);
+
+        let bar2 = new BarChart({
+            'parentElement': '#charChart3',
+            'containerHeight': 350,
+            'containerWidth': 1000
+        }, bar2Data);
     })
+
 }
 
 function changeEpisode(id, value) {
