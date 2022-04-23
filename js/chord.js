@@ -65,7 +65,7 @@ class Chord {
                 .outerRadius(210) //just try this - may need to shift a little but should be close
             )
             console.log(vis.config.tp)
-        vis.tooltip = d3.select('#tooltip1')
+        vis.tooltip = d3.select('#' + vis.config.tp)
 
         const showTooltip = function (event, d) {
             console.log(vis.names[d.source.index] + vis.names[d.target.index])
