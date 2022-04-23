@@ -184,7 +184,7 @@ d3.json("data/all_series_lines.json")
 
             if (episode.GARAK == undefined) {
 
-               // garakGay.push({ "year": number, "value": 0 });
+                // garakGay.push({ "year": number, "value": 0 });
 
             }
             else {
@@ -216,8 +216,8 @@ d3.json("data/all_series_lines.json")
 
 
                 // garakGay.push({ "episode": number, "gayness": gaycount });
-                if (gaycount>0){
-                garakGay.push({ "year": number, "value": gaycount });
+                if (gaycount > 0) {
+                    garakGay.push({ "year": number, "value": gaycount });
                 }
             }
         });
@@ -356,7 +356,7 @@ function changeSeason(id, value) {
     }
 }
 
-function charSelect(value){
+function charSelect(value) {
     console.log(value)
 
     d3.json("data/all_series_lines.json").then(data => {
@@ -366,53 +366,53 @@ function charSelect(value){
         let epLines = [];
         epLines[0] = 0;
 
-        let seasonLines = [0,0,0,0,0,0,0,0];
+        let seasonLines = [0, 0, 0, 0, 0, 0, 0, 0];
 
-        let seasonChecker = [0,0,0,0,0,0,0];
+        let seasonChecker = [0, 0, 0, 0, 0, 0, 0];
 
         let lineData = [];
         let bar1Data = [];
         let bar2Data = [];
 
-        for(let id = 1; id <= 172; id++){ 
+        for (let id = 1; id <= 172; id++) {
             // console.log(episode_no - 1)
             let episode_data = ((data['DS9']['episode ' + String(id)]))
             let speakers = Object.keys(episode_data);
 
-            if (speakers.includes(value.toUpperCase())){
+            if (speakers.includes(value.toUpperCase())) {
                 // all pairs (label, frequencies) to an array of arrays(2)
                 epLines[id] = 0;
 
-                for (var key in episode_data){
-                   if (episode_data.hasOwnProperty(key) && key == value.toUpperCase()){
-                      epLines[id] += episode_data[key].length;
-                   }
+                for (var key in episode_data) {
+                    if (episode_data.hasOwnProperty(key) && key == value.toUpperCase()) {
+                        epLines[id] += episode_data[key].length;
+                    }
                 }
-                if (epLines[id] > 0){
-                    epCounter[id] = epCounter[id-1] + 1
-                    seasonChecker[Math.ceil(id/26)] = 1;
-                    seasonLines[Math.ceil(id/26)] += epLines[id];
+                if (epLines[id] > 0) {
+                    epCounter[id] = epCounter[id - 1] + 1
+                    seasonChecker[Math.ceil(id / 26)] = 1;
+                    seasonLines[Math.ceil(id / 26)] += epLines[id];
                 }
-                else{
-                    epCounter[id] = epCounter[id-1];
+                else {
+                    epCounter[id] = epCounter[id - 1];
                     epLines[id] = 0;
                 }
             }
-            else{
-                epCounter[id] = epCounter[id-1];
+            else {
+                epCounter[id] = epCounter[id - 1];
                 epLines[id] = 0;
             }
-            lineData.push({"year": id, "value": epCounter[id]});
-            bar1Data.push({key: id, value: epLines[id]});
+            lineData.push({ "year": id, "value": epCounter[id] });
+            bar1Data.push({ key: id, value: epLines[id] });
         }
 
 
         var seasonInfo = document.getElementById('SeasonInfo');
         let seasonStr = "Appears in season(s)";
 
-        for (let i = 1; i <= 7; i++){
-            bar2Data.push({key: i, value: seasonLines[i]});
-            if(seasonChecker[i] == 1){
+        for (let i = 1; i <= 7; i++) {
+            bar2Data.push({ key: i, value: seasonLines[i] });
+            if (seasonChecker[i] == 1) {
                 seasonStr = seasonStr + " " + String(i) + ",";
             }
         }
@@ -458,7 +458,7 @@ function changeEpisode(id, value) {
 
         console.log(episode_no)
 
-        
+
         // console.log(episode_no - 1)
         let episode_data = ((data['DS9']['episode ' + String(episode_no)]))
         let speakers = Object.keys(episode_data)
@@ -532,47 +532,249 @@ function changeEpisode(id, value) {
 
 }
 
+
+
 function chordDiagram2() {
 
 
-    const matrix2 = [[29 ,30 ,26 ,19 ,14 ,27 ,12 ,26 ,10 ,31],
-    [30 ,31 ,18 ,27 ,35 ,21 ,27 ,33 ,23 ,26],
-    [26 ,18 ,15 ,17 ,18 ,39 ,17 ,38 ,10 ,15],
-    [19 ,27 ,17 ,21 ,26 ,23 ,16 ,37 ,38 ,14],
-    [14 ,35 ,18 ,26 ,13 ,26 ,37 ,36 ,28 ,37],
-    [27 ,21 ,39 ,23 ,26 ,10 ,39 ,13 ,24 ,21],
-    [12 ,27 ,17 ,16 ,37 ,39 ,17 ,39 ,24 ,23],
-    [26 ,33 ,38 ,37 ,36 ,13 ,39 ,28 ,11 ,39],
-    [10 ,23 ,10 ,38 ,28 ,24 ,24 ,11 ,25 ,18],
-    [31 ,26 ,15 ,14 ,37 ,21 ,23 ,39 ,18 ,12]]
+    let matrix1 = [[0, 63, 54, 73, 32, 63, 39, 73, 0, 0],
+    [63, 0, 38, 42, 17, 32, 39, 46, 0, 0],
+    [54, 38, 0, 49, 15, 33, 28, 52, 0, 0],
+    [73, 42, 49, 0, 13, 54, 26, 58, 0, 0],
+    [32, 17, 15, 13, 0, 15, 18, 17, 0, 0],
+    [63, 32, 33, 54, 15, 0, 26, 56, 0, 0],
+    [39, 39, 28, 26, 18, 26, 0, 31, 0, 0],
+    [73, 46, 52, 58, 17, 56, 31, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+    let matrix2 =
+        [[0, 47, 45, 52, 18, 52, 37, 55, 0, 0],
+        [47, 0, 42, 38, 13, 39, 34, 43, 0, 0],
+        [45, 42, 0, 35, 11, 42, 33, 41, 0, 0],
+        [52, 38, 35, 0, 15, 45, 31, 48, 0, 0],
+        [18, 13, 11, 15, 0, 15, 12, 15, 0, 0],
+        [52, 39, 42, 45, 15, 0, 30, 48, 0, 0],
+        [37, 34, 33, 31, 12, 30, 0, 35, 0, 0],
+        [55, 43, 41, 48, 15, 48, 35, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+    let matrix3 =
+        [[0, 43, 45, 44, 17, 48, 32, 49, 4, 0],
+        [43, 0, 40, 39, 12, 37, 32, 43, 4, 0],
+        [45, 40, 0, 42, 12, 40, 29, 43, 4, 0],
+        [44, 39, 42, 0, 13, 37, 28, 42, 4, 0],
+        [17, 12, 12, 13, 0, 13, 12, 12, 0, 0],
+        [48, 37, 40, 37, 13, 0, 28, 43, 4, 0],
+        [32, 32, 29, 28, 12, 28, 0, 30, 2, 0],
+        [49, 43, 43, 42, 12, 43, 30, 0, 4, 0],
+        [4, 4, 4, 4, 0, 4, 2, 4, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+    let matrix4 =
+        [[0, 44, 43, 43, 16, 54, 28, 46, 50, 0],
+        [44, 0, 32, 30, 12, 36, 31, 37, 37, 0],
+        [43, 32, 0, 32, 12, 36, 26, 38, 32, 0],
+        [43, 30, 32, 0, 11, 42, 28, 35, 45, 0],
+        [16, 12, 12, 11, 0, 10, 7, 10, 10, 0],
+        [54, 36, 36, 42, 10, 0, 29, 42, 47, 0],
+        [28, 31, 26, 28, 7, 29, 0, 31, 27, 0],
+        [46, 37, 38, 35, 10, 42, 31, 0, 41, 0],
+        [50, 37, 32, 45, 10, 47, 27, 41, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+    let matrix5 =
+        [[0, 48, 47, 57, 20, 48, 25, 46, 40, 0],
+        [48, 0, 35, 40, 15, 34, 24, 32, 30, 0],
+        [47, 35, 0, 41, 16, 40, 22, 34, 34, 0],
+        [57, 40, 41, 0, 13, 42, 21, 36, 40, 0],
+        [20, 15, 16, 13, 0, 12, 12, 12, 9, 0],
+        [48, 34, 40, 42, 12, 0, 24, 37, 36, 0],
+        [25, 24, 22, 21, 12, 24, 0, 19, 22, 0],
+        [46, 32, 34, 36, 12, 37, 19, 0, 33, 0],
+        [40, 30, 34, 40, 9, 36, 22, 33, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+    let matrix6 =
+        [[0, 37, 43, 41, 27, 35, 28, 47, 38, 5],
+        [37, 0, 36, 33, 18, 32, 28, 40, 31, 4],
+        [43, 36, 0, 34, 19, 38, 30, 37, 38, 4],
+        [41, 33, 34, 0, 12, 32, 26, 35, 35, 0],
+        [27, 18, 19, 12, 0, 16, 14, 23, 14, 4],
+        [35, 32, 38, 32, 16, 0, 28, 32, 34, 4],
+        [28, 28, 30, 26, 14, 28, 0, 26, 27, 4],
+        [47, 40, 37, 35, 23, 32, 26, 0, 34, 4],
+        [38, 31, 38, 35, 14, 34, 27, 34, 0, 4],
+        [5, 4, 4, 0, 4, 4, 4, 4, 4, 0]];
+
+    let matrix7 =
+        [[0, 35, 41, 0, 10, 34, 26, 33, 30, 42],
+        [35, 0, 32, 0, 7, 28, 19, 35, 24, 32],
+        [41, 32, 0, 0, 8, 37, 26, 32, 28, 44],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [10, 7, 8, 0, 0, 6, 5, 6, 7, 9],
+        [34, 28, 37, 0, 6, 0, 23, 27, 25, 35],
+        [26, 19, 26, 0, 5, 23, 0, 22, 17, 25],
+        [33, 35, 32, 0, 6, 27, 22, 0, 25, 30],
+        [30, 24, 28, 0, 7, 25, 17, 25, 0, 30],
+        [42, 32, 44, 0, 9, 35, 25, 30, 30, 0]];
+    let season = document.getElementById('season_2_chord_id')
+    let day;
+    switch (parseInt(season.value)) {
+        case 1:
+            day = matrix1;
+            break;
+        case 2:
+            day = matrix2;
+            break;
+        case 3:
+            day = matrix3;
+            break;
+        case 4:
+            day = matrix4;
+            break;
+        case 5:
+            day = matrix5;
+            break;
+        case 6:
+            day = matrix6;
+            break;
+        case 7:
+            day = matrix7;
+            break;
+        default:
+            break;
+    }
+    console.log(day)
+
+
+    var svg = d3.select("svg#new_chord_2");
+    svg.selectAll("*").remove();
 
     let chord2 = new Chord({
         'parentElement': '#new_chord_2',
         'containerHeight': 700,
         'containerWidth': 700,
         'tp': 'tooltip1'
-    }, matrix2);
+    }, day);
 }
 
 function chordDiagram() {
 
-
-    const matrix = [[0, 323, 326, 319, 146, 0, 223, 358, 167, 49],
-    [323, 0, 261, 227, 97, 0, 214, 283, 130, 38],
-    [326, 261, 0, 240, 98, 0, 202, 285, 142, 50],
-    [319, 227, 240, 0, 82, 0, 167, 262, 128, 0],
-    [146, 97, 98, 82, 0, 0, 84, 99, 43, 14],
+    let matrix1 = [[0, 63, 54, 73, 32, 63, 39, 73, 0, 0],
+    [63, 0, 38, 42, 17, 32, 39, 46, 0, 0],
+    [54, 38, 0, 49, 15, 33, 28, 52, 0, 0],
+    [73, 42, 49, 0, 13, 54, 26, 58, 0, 0],
+    [32, 17, 15, 13, 0, 15, 18, 17, 0, 0],
+    [63, 32, 33, 54, 15, 0, 26, 56, 0, 0],
+    [39, 39, 28, 26, 18, 26, 0, 31, 0, 0],
+    [73, 46, 52, 58, 17, 56, 31, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [223, 214, 202, 167, 84, 0, 0, 203, 101, 31],
-    [358, 283, 285, 262, 99, 0, 203, 0, 144, 36],
-    [167, 130, 142, 128, 43, 0, 101, 144, 0, 36],
-    [49, 38, 50, 0, 14, 0, 31, 36, 36, 0]];
+    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+    let matrix2 =
+        [[0, 47, 45, 52, 18, 52, 37, 55, 0, 0],
+        [47, 0, 42, 38, 13, 39, 34, 43, 0, 0],
+        [45, 42, 0, 35, 11, 42, 33, 41, 0, 0],
+        [52, 38, 35, 0, 15, 45, 31, 48, 0, 0],
+        [18, 13, 11, 15, 0, 15, 12, 15, 0, 0],
+        [52, 39, 42, 45, 15, 0, 30, 48, 0, 0],
+        [37, 34, 33, 31, 12, 30, 0, 35, 0, 0],
+        [55, 43, 41, 48, 15, 48, 35, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+    let matrix3 =
+        [[0, 43, 45, 44, 17, 48, 32, 49, 4, 0],
+        [43, 0, 40, 39, 12, 37, 32, 43, 4, 0],
+        [45, 40, 0, 42, 12, 40, 29, 43, 4, 0],
+        [44, 39, 42, 0, 13, 37, 28, 42, 4, 0],
+        [17, 12, 12, 13, 0, 13, 12, 12, 0, 0],
+        [48, 37, 40, 37, 13, 0, 28, 43, 4, 0],
+        [32, 32, 29, 28, 12, 28, 0, 30, 2, 0],
+        [49, 43, 43, 42, 12, 43, 30, 0, 4, 0],
+        [4, 4, 4, 4, 0, 4, 2, 4, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
 
+    let matrix4 =
+        [[0, 44, 43, 43, 16, 54, 28, 46, 50, 0],
+        [44, 0, 32, 30, 12, 36, 31, 37, 37, 0],
+        [43, 32, 0, 32, 12, 36, 26, 38, 32, 0],
+        [43, 30, 32, 0, 11, 42, 28, 35, 45, 0],
+        [16, 12, 12, 11, 0, 10, 7, 10, 10, 0],
+        [54, 36, 36, 42, 10, 0, 29, 42, 47, 0],
+        [28, 31, 26, 28, 7, 29, 0, 31, 27, 0],
+        [46, 37, 38, 35, 10, 42, 31, 0, 41, 0],
+        [50, 37, 32, 45, 10, 47, 27, 41, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+    let matrix5 =
+        [[0, 48, 47, 57, 20, 48, 25, 46, 40, 0],
+        [48, 0, 35, 40, 15, 34, 24, 32, 30, 0],
+        [47, 35, 0, 41, 16, 40, 22, 34, 34, 0],
+        [57, 40, 41, 0, 13, 42, 21, 36, 40, 0],
+        [20, 15, 16, 13, 0, 12, 12, 12, 9, 0],
+        [48, 34, 40, 42, 12, 0, 24, 37, 36, 0],
+        [25, 24, 22, 21, 12, 24, 0, 19, 22, 0],
+        [46, 32, 34, 36, 12, 37, 19, 0, 33, 0],
+        [40, 30, 34, 40, 9, 36, 22, 33, 0, 0],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]];
+
+    let matrix6 =
+        [[0, 37, 43, 41, 27, 35, 28, 47, 38, 5],
+        [37, 0, 36, 33, 18, 32, 28, 40, 31, 4],
+        [43, 36, 0, 34, 19, 38, 30, 37, 38, 4],
+        [41, 33, 34, 0, 12, 32, 26, 35, 35, 0],
+        [27, 18, 19, 12, 0, 16, 14, 23, 14, 4],
+        [35, 32, 38, 32, 16, 0, 28, 32, 34, 4],
+        [28, 28, 30, 26, 14, 28, 0, 26, 27, 4],
+        [47, 40, 37, 35, 23, 32, 26, 0, 34, 4],
+        [38, 31, 38, 35, 14, 34, 27, 34, 0, 4],
+        [5, 4, 4, 0, 4, 4, 4, 4, 4, 0]];
+
+    let matrix7 =
+        [[0, 35, 41, 0, 10, 34, 26, 33, 30, 42],
+        [35, 0, 32, 0, 7, 28, 19, 35, 24, 32],
+        [41, 32, 0, 0, 8, 37, 26, 32, 28, 44],
+        [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+        [10, 7, 8, 0, 0, 6, 5, 6, 7, 9],
+        [34, 28, 37, 0, 6, 0, 23, 27, 25, 35],
+        [26, 19, 26, 0, 5, 23, 0, 22, 17, 25],
+        [33, 35, 32, 0, 6, 27, 22, 0, 25, 30],
+        [30, 24, 28, 0, 7, 25, 17, 25, 0, 30],
+        [42, 32, 44, 0, 9, 35, 25, 30, 30, 0]];
+
+    let season = document.getElementById('season_1_chord_id')
+    let day;
+    switch (parseInt(season.value)) {
+        case 1:
+            day = matrix1;
+            break;
+        case 2:
+            day = matrix2;
+            break;
+        case 3:
+            day = matrix3;
+            break;
+        case 4:
+            day = matrix4;
+            break;
+        case 5:
+            day = matrix5;
+            break;
+        case 6:
+            day = matrix6;
+            break;
+        case 7:
+            day = matrix7;
+            break;
+        default:
+            break;
+    }
+    var svg = d3.select("svg#new_chord");
+    svg.selectAll("*").remove();
     let chord = new Chord({
         'parentElement': '#new_chord',
         'containerHeight': 1000,
         'containerWidth': 1000,
         'tp': 'tooltip2'
-    }, matrix);
+    }, day);
 
 }
