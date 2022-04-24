@@ -1,5 +1,5 @@
-console.log("hello");
-console.log(d3.layout.cloud);
+// console.log("hello");
+// console.log(d3.layout.cloud);
 
 d3Cloud = d3.layout.cloud;
 
@@ -26,7 +26,7 @@ function WordCloud(text, {
         .slice(0, maxWords)
         .map(([key, size]) => ({ text: word(key), size }));
 
-    console.log(data);
+    // console.log(data);
 
     const svg = d3.select(document.getElementById("wordCloud"));
     svg.selectAll("*").remove();
@@ -68,14 +68,14 @@ function WordCloud(text, {
 
 
 
-function charSelectWC() {
+function charSelectWC(alpha) {
     d3.json("data/all_series_lines.json").then(da => {
-        // console.log(data)
+        // // console.log(data)
 
         let ds9 = da.DS9;
-        //console.log(da.DS9);
+        //// console.log(da.DS9);
         Object.keys(ds9).forEach(ep => {
-            //console.log(ds9[ep]);
+            //// console.log(ds9[ep]);
             var episode = ds9[ep];
 
             var number = +ep.substring(
@@ -258,9 +258,20 @@ function charSelectWC() {
     episode_no = parseInt(season - 1) * 26 + parseInt(episode);
 
         var allWords = [];
-        let character = document.getElementById("chars")
-        console.log(character.value)
-        linesData.filter(d => d.char == character.value)
+        let character ;
+
+        if(alpha == 1) {
+            character  = document.getElementById("chars").value
+        } else {
+            character = document.getElementById("box_vals").innerHTML
+            character  = character.split(' ')
+            let cl = character.length;
+            character = character[cl - 1]
+            character = character.toLowerCase();
+        }
+
+        console.log(character)
+        linesData.filter(d => d.char == character)
             .filter(d => d.episode == episode_no)
             .forEach(d => {
                 //allWords = allWords.concat(d.lines);
@@ -271,7 +282,7 @@ function charSelectWC() {
                 });
             });
 
-        console.log(allWords.join(' '))
+        // console.log(allWords.join(' '))
 
 
         WordCloud(allWords.join(' '), {

@@ -529,6 +529,15 @@ function changeEpisode(id, value) {
         }, chartData);
         barTimeYear.type = "Character: "
 
+        charSelectWC(2) //automatic triggering the word cloud
+
+        let character = document.getElementById("box_vals").innerHTML
+        character  = character.split(' ')
+        let cl = character.length;
+        character = character[cl - 1]
+        character = character.toLowerCase();
+        charSelect(character)
+
     })
 
 }
