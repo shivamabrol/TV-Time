@@ -134,9 +134,13 @@ class LineChart {
         vis.circles = vis.chart.selectAll('circle')
             .data(vis.data)
             .join('circle') // join rerenders the data that is filered
-            .attr('fill', (d) => vis.colorPalette(d.type))
+            // .attr('fill', (d) => vis.colorPalette(d.type))
+            .attr('fill', "red")
+
             .attr('opacity', .8)
-            .attr('stroke', (d) => vis.colorPalette(d.type))
+            //.attr('stroke', (d) => vis.colorPalette(d.type))
+            .attr('stroke', "red")
+
             .attr('stroke-width', 2)
             .attr('r', 4)
             .attr('cy', (d) => vis.yScale(d.value))
@@ -146,7 +150,9 @@ class LineChart {
         vis.prevline = vis.chart.selectAll(".line")
             .data(vis.groups)
             .join("path")
-            .attr('stroke', (d) => vis.colorPalette(d[0]))
+            //.attr('stroke', (d) => vis.colorPalette(d[0]))
+            .attr('stroke', "red")
+
             .attr('fill', "none")
             .attr('stroke-width', 2)
             .attr('d', function (d) {
@@ -161,7 +167,9 @@ class LineChart {
         vis.chart.selectAll(".line")
             .data(vis.groups)
             .join("path")
-            .attr('stroke', (d) => vis.colorPalette(d[0]))
+            //.attr('stroke', (d) => vis.colorPalette(d[0]))
+            .attr('stroke', "red")
+
             .attr('fill', "none")
             .attr('stroke-width', 2)
             //.attr('d', vis.prevline)
