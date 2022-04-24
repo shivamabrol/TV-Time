@@ -1,5 +1,5 @@
 class BarChart {
-    constructor(_config, _data, _visible = true) {
+    constructor(_config, _data, _visible = true, _type = "Episode") {
         this.config = {
             parentElement: _config.parentElement,
             containerWidth: _config.containerWidth || 500,
@@ -7,6 +7,7 @@ class BarChart {
             margin: { top: 10, bottom: 30, right: 50, left: 50 }
         }
         this.data = _data;
+        this.type = _type;
         //console.log(this.data);
         //console.log(this.data2);
         // Call a class function
@@ -127,6 +128,28 @@ class BarChart {
             .attr('height', (s) => vis.height - vis.yScale(s.value))
 
             .attr('width', vis.xScale.bandwidth())
+            .on('mouseover', function (event, d) { 
+                //create a tool tip
+                d3.select('#tooltip')
+                  .style('opacity', 1)
+                  .style('z-index', 1000000)
+                  .style('position', 'absolute')
+                  .style('background', 'white')
+                  .html(`
+                  <div class="tooltip-title">${vis.type} ${d.key}</div>
+                  <ul>
+                    <li> Lines spoken: ${d.value}</li>
+
+                  </ul>
+                `);
+              })
+              .on('mousemove', (event) => {
+                //position the tooltip
+                console.log(String(event.pageX + 10) + 'px')
+                d3.select('#tooltip')
+                  .style('left', String(event.pageX + 10) + 'px')
+                  .style('top', String(event.pageY + 10) + 'px');
+              })
 
         if (this.haveAxisVisible){
             vis.chart.append("g")

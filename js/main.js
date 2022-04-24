@@ -433,18 +433,19 @@ function charSelect(value) {
             'containerHeight': 350,
             'containerWidth': 1000
         }, lineData);
-
+        line1.type = "Episode"
         let bar1 = new BarChart({
             'parentElement': '#charChart2',
             'containerHeight': 350,
             'containerWidth': 1000
         }, bar1Data, false);
-
+        bar1.type = "Episode"
         let bar2 = new BarChart({
             'parentElement': '#charChart3',
             'containerHeight': 350,
             'containerWidth': 1000
         }, bar2Data);
+        bar2.type = "Season"
     })
 
 }
@@ -526,7 +527,7 @@ function changeEpisode(id, value) {
             'containerHeight': 350,
             'containerWidth': 600
         }, chartData);
-
+        barTimeYear.type = "Character: "
 
     })
 

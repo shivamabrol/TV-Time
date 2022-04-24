@@ -3,6 +3,16 @@
 
 <head>
     <style>
+        #tooltip{
+            position: absolute;
+            opacity: 0;
+            background: #fff;
+            box-shadow: 2px 2px 3px 0px rgb(92 92 92 / 0.5);
+            border: 1px solid #ddd;
+            font-size: 12px;
+            font-weight: 600;
+            padding: 2px 8px;
+        }
         .item1 {
             grid-area: header;
         }
@@ -189,12 +199,17 @@
                 </p>
 
                 <br>
-
                 <svg id="charChart1" style="border: 1px solid black"></svg>
+                <br>
+                <p style="font-size: 14px">Character appearances each episode vs. total episodes aired</p>
                 <br>
                 <svg id="charChart2" style="border: 1px solid black"></svg>
                 <br>
+                <p style="font-size: 12px">Lines spoken per episode</p>
+                <br>
                 <svg id="charChart3" style="border: 1px solid black"></svg>
+                <br>
+                <p style="font-size: 14px">Lines spoken per season</p>
             </div>
 
         </div>
@@ -212,6 +227,7 @@
     <script src="js/lineChart.js"></script>
     <script src="js/barChart.js"></script>
 
+    <div id="tooltip"></div>
 </body>
 
 </html>
